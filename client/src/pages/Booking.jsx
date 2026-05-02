@@ -73,13 +73,13 @@ const Booking = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button 
               onClick={() => setSuccess(false)}
-              className="bg-zinc-800 hover:bg-zinc-700 text-white font-bold px-8 py-4 rounded-xl transition-all"
+              className="bg-zinc-800 hover:bg-zinc-700 text-white font-bold px-10 py-4 rounded-full transition-all"
             >
               New Booking
             </button>
             <a 
               href="/" 
-              className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold px-8 py-4 rounded-xl flex items-center gap-2 justify-center transition-all hover:scale-105"
+              className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold px-10 py-4 rounded-full flex items-center gap-2 justify-center transition-all hover:scale-105 shadow-lg shadow-yellow-400/20"
             >
               Back to Home <ArrowRight size={18} />
             </a>
@@ -158,7 +158,7 @@ const Booking = () => {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="Enter your name"
-                      className="w-full bg-black border border-zinc-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-yellow-400 transition-colors"
+                      className="w-full bg-black border border-zinc-700 rounded-full px-6 py-4 text-white focus:outline-none focus:border-yellow-400 transition-colors"
                     />
                   </div>
 
@@ -174,7 +174,7 @@ const Booking = () => {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="Enter mobile number"
-                      className="w-full bg-black border border-zinc-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-yellow-400 transition-colors"
+                      className="w-full bg-black border border-zinc-700 rounded-full px-6 py-4 text-white focus:outline-none focus:border-yellow-400 transition-colors"
                     />
                   </div>
 
@@ -190,7 +190,7 @@ const Booking = () => {
                       value={formData.location}
                       onChange={handleChange}
                       placeholder="Area/City in Sivagangai"
-                      className="w-full bg-black border border-zinc-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-yellow-400 transition-colors"
+                      className="w-full bg-black border border-zinc-700 rounded-full px-6 py-4 text-white focus:outline-none focus:border-yellow-400 transition-colors"
                     />
                   </div>
 
@@ -204,7 +204,7 @@ const Booking = () => {
                       name="workType"
                       value={formData.workType}
                       onChange={handleChange}
-                      className="w-full bg-black border border-zinc-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-yellow-400 transition-colors appearance-none"
+                      className="w-full bg-black border border-zinc-700 rounded-full px-6 py-4 text-white focus:outline-none focus:border-yellow-400 transition-colors appearance-none"
                     >
                       <option value="" disabled>Select work type</option>
                       {WORK_TYPES.map(type => (
@@ -224,7 +224,7 @@ const Booking = () => {
                       name="date"
                       value={formData.date}
                       onChange={handleChange}
-                      className="w-full bg-black border border-zinc-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-yellow-400 transition-colors"
+                      className="w-full bg-black border border-zinc-700 rounded-full px-6 py-4 text-white focus:outline-none focus:border-yellow-400 transition-colors"
                     />
                   </div>
 
@@ -239,7 +239,7 @@ const Booking = () => {
                       name="time"
                       value={formData.time}
                       onChange={handleChange}
-                      className="w-full bg-black border border-zinc-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-yellow-400 transition-colors"
+                      className="w-full bg-black border border-zinc-700 rounded-full px-6 py-4 text-white focus:outline-none focus:border-yellow-400 transition-colors"
                     />
                   </div>
                 </div>
@@ -260,7 +260,7 @@ const Booking = () => {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full bg-yellow-400 hover:bg-yellow-300 disabled:bg-zinc-700 text-black font-black py-4 rounded-xl transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
+                  className="w-full bg-yellow-400 hover:bg-yellow-300 disabled:bg-zinc-700 text-black font-black py-4 rounded-full transition-all hover:scale-[1.02] flex items-center justify-center gap-2 shadow-xl shadow-yellow-400/20"
                 >
                   {submitting ? 'Submitting...' : 'Confirm Booking Request'}
                 </button>

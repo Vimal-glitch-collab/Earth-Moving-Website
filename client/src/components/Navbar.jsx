@@ -35,8 +35,8 @@ const Navbar = () => {
               SB
             </div>
             <div className="hidden sm:block">
-              <div className="text-white font-bold text-sm leading-tight">Sri Balaji</div>
-              <div className="text-yellow-400 text-xs font-medium">Earth Movers</div>
+              <div className="text-white font-black text-sm tracking-tighter uppercase leading-none">SRI BALAJI</div>
+              <div className="text-yellow-400 text-[10px] font-bold tracking-[0.2em] uppercase leading-none mt-1">EARTH MOVERS</div>
             </div>
           </Link>
 
@@ -71,7 +71,7 @@ const Navbar = () => {
             </a>
             <Link
               to="/booking"
-              className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold px-5 py-2.5 rounded-lg text-sm transition-all duration-200 hover:scale-105"
+              className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold px-6 py-2.5 rounded-full text-sm transition-all duration-200 hover:scale-105 shadow-lg shadow-yellow-400/20"
             >
               Book Now
             </Link>

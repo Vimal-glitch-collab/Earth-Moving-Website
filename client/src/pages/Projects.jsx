@@ -72,9 +72,9 @@ const Projects = () => {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`flex-shrink-0 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+              className={`flex-shrink-0 px-6 py-2 rounded-full text-sm font-bold transition-all ${
                 activeCategory === cat
-                  ? 'bg-yellow-400 text-black'
+                  ? 'bg-yellow-400 text-black shadow-lg shadow-yellow-400/20'
                   : 'bg-zinc-800 text-gray-300 hover:bg-zinc-700 hover:text-white'
               }`}
             >

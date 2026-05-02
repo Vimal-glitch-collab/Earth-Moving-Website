@@ -17,8 +17,8 @@ const Footer = () => {
                 SB
               </div>
               <div>
-                <div className="text-white font-bold">Sri Balaji</div>
-                <div className="text-yellow-400 text-sm">Earth Movers</div>
+                <div className="text-white font-black text-sm tracking-tighter uppercase leading-none">SRI BALAJI</div>
+                <div className="text-yellow-400 text-[10px] font-bold tracking-[0.2em] uppercase leading-none mt-1">EARTH MOVERS</div>
               </div>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed mb-5">

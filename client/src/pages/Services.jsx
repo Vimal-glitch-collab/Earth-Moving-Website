@@ -75,7 +75,7 @@ const Services = () => {
                   ))}
                 </ul>
                 <Link to="/booking"
-                  className="inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-300 text-black font-bold px-5 py-2.5 rounded-lg text-sm transition-all hover:scale-105">
+                  className="inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-300 text-black font-bold px-6 py-3 rounded-full text-sm transition-all hover:scale-105 shadow-lg">
                   Book This Service <ArrowRight size={14} />
                 </Link>
               </div>
@@ -116,11 +116,11 @@ const Services = () => {
           <h2 className="text-3xl font-black text-white mb-4">Ready to Get Started?</h2>
           <p className="text-gray-400 mb-8">Contact us today for a free site assessment and quote.</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link to="/booking" className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold px-8 py-4 rounded-xl flex items-center gap-2 transition-all hover:scale-105">
+            <Link to="/booking" className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold px-10 py-4 rounded-full flex items-center gap-2 transition-all hover:scale-105 shadow-xl">
               Book Now <ArrowRight size={16} />
             </Link>
-            <a href="tel:+919443239842" className="border-2 border-yellow-400/30 hover:border-yellow-400 text-yellow-400 font-bold px-8 py-4 rounded-xl transition-all">
-              Call +91 94432 39842
+            <a href="tel:+919443239842" className="border-2 border-yellow-400/30 hover:border-yellow-400 text-yellow-400 font-bold px-10 py-4 rounded-full transition-all hover:bg-yellow-400/5">
+              Call Now
             </a>
           </div>
         </div>

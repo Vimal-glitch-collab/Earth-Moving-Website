@@ -59,14 +59,15 @@ const Home = () => {
             alt="Backhoe Loader Construction"
             className="w-full h-full object-cover"
           />
+          <div className="absolute inset-0 bg-black/60 z-0"></div>
           <div className="absolute inset-0 hero-gradient"></div>
         </div>
 
         {/* Yellow accent line */}
         <div className="absolute left-0 top-0 bottom-0 w-1 bg-yellow-400 z-10"></div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-40">
-          <div className="max-w-3xl">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-40 flex flex-col items-center">
+          <div className="w-full">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 bg-yellow-400/10 border border-yellow-400/30 rounded-full px-4 py-2 mb-6 animate-fadeInUp">
               <Zap size={14} className="text-yellow-400" />
@@ -74,13 +75,21 @@ const Home = () => {
             </div>
 
             {/* Heading */}
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black leading-tight mb-6 animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
-              <span className="text-white">Reliable </span>
-              <span className="text-gradient">Backhoe Loader</span>
-              <br />
-              <span className="text-white">Services in </span>
-              <span className="text-yellow-400">Sivagangai</span>
-            </h1>
+            <div className="text-center mb-8">
+              <h1 className="text-5xl sm:text-7xl lg:text-9xl font-black leading-none mb-6 animate-fadeInUp tracking-tighter" style={{ animationDelay: '0.1s' }}>
+                <span className="text-white block">SRI BALAJI</span>
+                <span className="text-yellow-400 block drop-shadow-[0_5px_5px_rgba(0,0,0,0.5)]">EARTH MOVERS</span>
+              </h1>
+              
+              <div className="inline-block bg-yellow-400 text-black font-black px-6 py-2 rounded-full text-sm lg:text-base uppercase tracking-widest animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
+                20+ Years of Trusted Service
+              </div>
+            </div>
+
+            <p className="text-gray-200 text-lg lg:text-2xl leading-relaxed mb-10 animate-fadeInUp text-center max-w-4xl mx-auto drop-shadow-md" style={{ animationDelay: '0.3s' }}>
+              Sivagangai's leading choice for professional JCB backhoe loader rentals, 
+              excavation, and land development services since 2004.
+            </p>
 
             <p className="text-gray-300 text-lg lg:text-xl leading-relaxed mb-8 animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
               Professional JCB backhoe loader rental for excavation, site clearing, land leveling and more.
@@ -88,30 +97,30 @@ const Home = () => {
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-4 mb-12 animate-fadeInUp" style={{ animationDelay: '0.3s' }}>
+            <div className="flex flex-wrap justify-center gap-6 mb-12 animate-fadeInUp" style={{ animationDelay: '0.4s' }}>
               <Link to="/booking"
-                className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold px-8 py-4 rounded-xl flex items-center gap-2 transition-all duration-200 hover:scale-105 shadow-lg">
+                className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold px-10 py-4 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 shadow-[0_10px_20px_rgba(234,179,8,0.3)]">
                 Book Now <ArrowRight size={18} />
               </Link>
               <a href={`https://wa.me/919443239842?text=${whatsappMsg}`} target="_blank" rel="noopener noreferrer"
-                className="bg-green-600 hover:bg-green-500 text-white font-bold px-8 py-4 rounded-xl flex items-center gap-2 transition-all duration-200 hover:scale-105">
-                <MessageCircle size={18} /> WhatsApp Booking
+                className="bg-green-600 hover:bg-green-500 text-white font-bold px-10 py-4 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 shadow-[0_10px_20px_rgba(22,163,74,0.3)]">
+                <MessageCircle size={18} /> WhatsApp
               </a>
               <Link to="/contact"
-                className="border-2 border-white/30 hover:border-yellow-400 text-white hover:text-yellow-400 font-bold px-8 py-4 rounded-xl flex items-center gap-2 transition-all duration-200">
+                className="border-2 border-white/50 hover:border-yellow-400 text-white hover:text-yellow-400 font-bold px-10 py-4 rounded-full flex items-center gap-2 transition-all duration-300 hover:bg-white/10">
                 Contact Us
               </Link>
             </div>
 
             {/* Phone numbers */}
-            <div className="flex flex-wrap gap-6 animate-fadeInUp" style={{ animationDelay: '0.4s' }}>
-              <a href="tel:+919443239842" className="flex items-center gap-2 text-gray-300 hover:text-yellow-400 transition-colors">
-                <Phone size={16} className="text-yellow-400" />
-                <span className="text-sm">+91 94432 39842</span>
+            <div className="flex flex-wrap justify-center gap-8 animate-fadeInUp" style={{ animationDelay: '0.5s' }}>
+              <a href="tel:+919443239842" className="flex items-center gap-3 text-white hover:text-yellow-400 transition-colors bg-white/5 px-6 py-3 rounded-full border border-white/10">
+                <Phone size={18} className="text-yellow-400" />
+                <span className="font-bold">+91 94432 39842</span>
               </a>
-              <a href="tel:+919994289069" className="flex items-center gap-2 text-gray-300 hover:text-yellow-400 transition-colors">
-                <Phone size={16} className="text-yellow-400" />
-                <span className="text-sm">+91 99942 89069</span>
+              <a href="tel:+919994289069" className="flex items-center gap-3 text-white hover:text-yellow-400 transition-colors bg-white/5 px-6 py-3 rounded-full border border-white/10">
+                <Phone size={18} className="text-yellow-400" />
+                <span className="font-bold">+91 99942 89069</span>
               </a>
             </div>
           </div>
@@ -128,8 +137,8 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             <StatCard end={500} label="Projects Completed" />
-            <StatCard end={10} label="Years Experience" />
-            <StatCard end={50} label="Happy Clients" />
+            <StatCard end={20} label="Years Experience" />
+            <StatCard end={150} label="Happy Clients" />
             <StatCard end={24} label="Hour Service" suffix="/7" />
           </div>
         </div>
@@ -193,10 +202,10 @@ const Home = () => {
                 ))}
               </ul>
               <div className="mt-8 flex gap-4">
-                <Link to="/booking" className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold px-6 py-3 rounded-xl flex items-center gap-2 transition-all hover:scale-105">
+                <Link to="/booking" className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold px-8 py-4 rounded-full flex items-center gap-2 transition-all hover:scale-105 shadow-lg">
                   Book Now <ArrowRight size={16} />
                 </Link>
-                <Link to="/projects" className="border border-zinc-700 hover:border-yellow-400/50 text-white hover:text-yellow-400 px-6 py-3 rounded-xl transition-all">
+                <Link to="/projects" className="border-2 border-zinc-700 hover:border-yellow-400 text-white hover:text-yellow-400 px-8 py-4 rounded-full transition-all hover:bg-white/5">
                   View Projects
                 </Link>
               </div>
@@ -211,9 +220,9 @@ const Home = () => {
                 className="relative rounded-2xl w-full object-cover shadow-2xl border border-zinc-800"
               />
               {/* Badge overlay */}
-              <div className="absolute -bottom-5 -left-5 bg-yellow-400 text-black px-5 py-3 rounded-xl shadow-xl font-black text-lg">
-                10+ Years
-                <div className="text-xs font-medium opacity-80">of Experience</div>
+              <div className="absolute -bottom-5 -left-5 bg-yellow-400 text-black px-6 py-4 rounded-2xl shadow-2xl font-black text-xl">
+                20+ Years
+                <div className="text-xs font-bold uppercase tracking-wider opacity-80">Trusted Service</div>
               </div>
             </div>
           </div>
@@ -234,11 +243,11 @@ const Home = () => {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a href="tel:+919443239842"
-              className="bg-black text-yellow-400 font-bold px-8 py-4 rounded-xl flex items-center gap-2 hover:bg-zinc-900 transition-all hover:scale-105">
+              className="bg-black text-yellow-400 font-bold px-10 py-4 rounded-full flex items-center gap-2 hover:bg-zinc-900 transition-all hover:scale-105 shadow-xl">
               <Phone size={18} /> Call Now
             </a>
             <a href={`https://wa.me/919443239842?text=${whatsappMsg}`} target="_blank" rel="noopener noreferrer"
-              className="bg-green-600 text-white font-bold px-8 py-4 rounded-xl flex items-center gap-2 hover:bg-green-500 transition-all hover:scale-105">
+              className="bg-green-600 text-white font-bold px-10 py-4 rounded-full flex items-center gap-2 hover:bg-green-500 transition-all hover:scale-105 shadow-xl">
               <MessageCircle size={18} /> WhatsApp
             </a>
           </div>

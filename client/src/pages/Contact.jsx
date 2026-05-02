@@ -87,7 +87,7 @@ const Contact = () => {
                   href="https://share.google/0gv0CNKOnprwMzg61"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-yellow-400 hover:bg-yellow-300 text-black font-black px-8 py-4 rounded-xl flex items-center gap-2 justify-center transition-all hover:scale-105 w-full sm:w-fit"
+                  className="bg-yellow-400 hover:bg-yellow-300 text-black font-black px-10 py-4 rounded-full flex items-center gap-2 justify-center transition-all hover:scale-105 w-full sm:w-fit shadow-lg shadow-yellow-400/20"
                 >
                   View on Google Maps <ExternalLink size={18} />
                 </a>
