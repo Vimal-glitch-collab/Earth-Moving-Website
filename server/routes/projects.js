@@ -38,6 +38,25 @@ router.post('/', protect, upload.single('image'), async (req, res) => {
   }
 });
 
+// PUT /api/projects/:id — Admin: update project details
+router.put('/:id', protect, async (req, res) => {
+  try {
+    const { title, category, description } = req.body;
+    const project = await Project.findById(req.params.id);
+    if (!project) return res.status(404).json({ message: 'Project not found' });
+
+    project.title = title || project.title;
+    project.category = category || project.category;
+    project.description = description || project.description;
+
+    await project.save();
+    res.json({ success: true, project });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to update project' });
+  }
+});
+
 // DELETE /api/projects/:id — Admin: delete project image
 router.delete('/:id', protect, async (req, res) => {
   try {

@@ -13,8 +13,10 @@ const AdminGallery = () => {
   const [formData, setFormData] = useState({
     title: '',
     category: 'Excavation',
+    description: '',
     image: null
   });
+  const [editingId, setEditingId] = useState(null);
 
   useEffect(() => {
     fetchProjects();
@@ -37,27 +39,54 @@ const AdminGallery = () => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
-    if (!formData.image) return toast.error('Please select an image');
-    
     setUploading(true);
+    
     const data = new FormData();
     data.append('title', formData.title);
     data.append('category', formData.category);
-    data.append('image', formData.image);
+    data.append('description', formData.description);
+    if (formData.image) data.append('image', formData.image);
 
     try {
-      const res = await axios.post(`${API_URL}/api/projects`, data, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
-      setProjects([res.data.project, ...projects]);
-      toast.success('Photo uploaded successfully');
+      if (editingId) {
+        await axios.put(`${API_URL}/api/projects/${editingId}`, {
+          title: formData.title,
+          category: formData.category,
+          description: formData.description
+        });
+        toast.success('Photo updated successfully');
+      } else {
+        if (!formData.image) {
+          toast.error('Please select an image');
+          setUploading(false);
+          return;
+        }
+        const res = await axios.post(`${API_URL}/api/projects`, data, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
+        setProjects([res.data.project, ...projects]);
+        toast.success('Photo uploaded successfully');
+      }
+      fetchProjects();
       setShowModal(false);
-      setFormData({ title: '', category: 'Excavation', image: null });
+      setEditingId(null);
+      setFormData({ title: '', category: 'Excavation', description: '', image: null });
     } catch (err) {
-      toast.error('Upload failed. Check server logs.');
+      toast.error('Operation failed. Check server logs.');
     } finally {
       setUploading(false);
     }
+  };
+
+  const openEdit = (p) => {
+    setEditingId(p._id);
+    setFormData({
+      title: p.title,
+      category: p.category,
+      description: p.description || '',
+      image: null
+    });
+    setShowModal(true);
   };
 
   const deleteProject = async (id) => {
@@ -79,7 +108,11 @@ const AdminGallery = () => {
           <p className="text-gray-text font-inter">Manage photos shown in the Projects section.</p>
         </div>
         <button 
-          onClick={() => setShowModal(true)}
+          onClick={() => {
+            setEditingId(null);
+            setFormData({ title: '', category: 'Excavation', description: '', image: null });
+            setShowModal(true);
+          }}
           className="btn-premium"
         >
           <Plus size={20} /> UPLOAD PHOTO
@@ -96,17 +129,25 @@ const AdminGallery = () => {
           projects.map((p) => (
             <div key={p._id} className="group relative bg-dark-surface border border-dark-border rounded-xl overflow-hidden aspect-square hover:border-jcb-yellow/40 transition-colors">
               <img src={p.imageUrl} alt={p.title} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-matte-black/70 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-4 text-center">
+              <div className="absolute inset-0 bg-matte-black/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-4 text-center">
                 <span className="bg-jcb-yellow text-matte-black text-[10px] font-montserrat font-black px-2 py-1 rounded mb-3 uppercase tracking-widest">
                   {p.category}
                 </span>
                 <h3 className="text-white font-montserrat font-bold text-sm mb-5 uppercase">{p.title}</h3>
-                <button 
-                  onClick={() => deleteProject(p._id)}
-                  className="w-12 h-12 rounded bg-red-500/20 border border-red-500/40 text-red-400 hover:bg-red-500 hover:text-white flex items-center justify-center transition-colors"
-                >
-                  <Trash2 size={18} />
-                </button>
+                <div className="flex gap-2">
+                  <button 
+                    onClick={() => openEdit(p)}
+                    className="w-10 h-10 rounded bg-white/10 border border-white/20 text-white hover:bg-jcb-yellow hover:text-black flex items-center justify-center transition-colors"
+                  >
+                    <Plus size={16} />
+                  </button>
+                  <button 
+                    onClick={() => deleteProject(p._id)}
+                    className="w-10 h-10 rounded bg-red-500/20 border border-red-500/40 text-red-400 hover:bg-red-500 hover:text-white flex items-center justify-center transition-colors"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
               </div>
             </div>
           ))
@@ -118,12 +159,14 @@ const AdminGallery = () => {
         )}
       </div>
 
-      {/* Upload Modal */}
+      {/* Upload/Edit Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-matte-black/90 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
           <div className="bg-dark-surface border border-dark-border w-full max-w-lg rounded-xl overflow-hidden shadow-2xl animate-fadeInUp">
             <div className="p-6 border-b border-dark-border flex items-center justify-between">
-              <h2 className="text-xl font-black font-montserrat text-white uppercase tracking-wide">Upload Project Photo</h2>
+              <h2 className="text-xl font-black font-montserrat text-white uppercase tracking-wide">
+                {editingId ? 'Edit Project Details' : 'Upload Project Photo'}
+              </h2>
               <button onClick={() => setShowModal(false)} className="text-gray-text hover:text-white w-10 h-10 rounded hover:bg-dark-bg flex items-center justify-center transition-colors">
                 <X size={20} />
               </button>
@@ -153,33 +196,47 @@ const AdminGallery = () => {
                   <option value="Site Clearing">Site Clearing</option>
                   <option value="Land Leveling">Land Leveling</option>
                   <option value="Road Work">Road Work</option>
+                  <option value="Backhoe Operations">Backhoe Operations</option>
                   <option value="Other">Other</option>
                 </select>
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-montserrat font-bold uppercase tracking-wider text-gray-text">Image File</label>
-                <div className="relative">
-                  <input
-                    required
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    className="hidden"
-                    id="file-upload"
-                  />
-                  <label 
-                    htmlFor="file-upload"
-                    className="w-full bg-dark-bg border-2 border-dashed border-dark-border hover:border-jcb-yellow/60 rounded-xl p-10 flex flex-col items-center justify-center cursor-pointer transition-all group"
-                  >
-                    <Upload size={36} className="text-dark-border group-hover:text-jcb-yellow mb-4 transition-colors" />
-                    <span className="text-gray-text text-sm font-inter group-hover:text-white transition-colors">
-                      {formData.image ? formData.image.name : 'Click to select project image'}
-                    </span>
-                    <span className="text-dark-border text-[10px] uppercase tracking-wider mt-2 font-montserrat font-bold">JPG, PNG or WEBP (Max 5MB)</span>
-                  </label>
-                </div>
+                <label className="text-xs font-montserrat font-bold uppercase tracking-wider text-gray-text">Description / Caption</label>
+                <textarea
+                  rows="3"
+                  placeholder="Details about the work performed..."
+                  value={formData.description}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  className="w-full bg-dark-bg border border-dark-border rounded px-4 py-3 text-white font-inter focus:outline-none focus:border-jcb-yellow text-sm transition-all placeholder:text-gray-text/50 resize-none"
+                />
               </div>
+
+              {!editingId && (
+                <div className="space-y-2">
+                  <label className="text-xs font-montserrat font-bold uppercase tracking-wider text-gray-text">Image File</label>
+                  <div className="relative">
+                    <input
+                      required
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileChange}
+                      className="hidden"
+                      id="file-upload"
+                    />
+                    <label 
+                      htmlFor="file-upload"
+                      className="w-full bg-dark-bg border-2 border-dashed border-dark-border hover:border-jcb-yellow/60 rounded-xl p-10 flex flex-col items-center justify-center cursor-pointer transition-all group"
+                    >
+                      <Upload size={36} className="text-dark-border group-hover:text-jcb-yellow mb-4 transition-colors" />
+                      <span className="text-gray-text text-sm font-inter group-hover:text-white transition-colors">
+                        {formData.image ? formData.image.name : 'Click to select project image'}
+                      </span>
+                      <span className="text-dark-border text-[10px] uppercase tracking-wider mt-2 font-montserrat font-bold">JPG, PNG or WEBP (Max 5MB)</span>
+                    </label>
+                  </div>
+                </div>
+              )}
 
               <button
                 type="submit"
@@ -187,9 +244,9 @@ const AdminGallery = () => {
                 className="btn-premium w-full disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {uploading ? (
-                  <><Loader2 size={20} className="animate-spin" /> UPLOADING...</>
+                  <><Loader2 size={20} className="animate-spin" /> PROCESSING...</>
                 ) : (
-                  'START UPLOAD'
+                  editingId ? 'UPDATE DETAILS' : 'START UPLOAD'
                 )}
               </button>
             </form>
