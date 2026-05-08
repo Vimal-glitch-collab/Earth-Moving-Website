@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Phone, MessageCircle, CheckCircle, Star, Zap, Shield, Clock, ChevronDown } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 // Animated counter hook
 const useCounter = (end, duration = 2000) => {
@@ -31,226 +32,302 @@ const useCounter = (end, duration = 2000) => {
 const StatCard = ({ end, label, suffix = '+' }) => {
   const { count, ref } = useCounter(end);
   return (
-    <div ref={ref} className="text-center">
-      <div className="text-4xl lg:text-5xl font-black text-yellow-400">{count}{suffix}</div>
-      <div className="text-gray-400 text-sm mt-1">{label}</div>
-    </div>
+    <motion.div 
+      ref={ref} 
+      className="text-center p-8 bg-dark-surface border border-dark-border rounded-xl"
+      whileHover={{ y: -10, borderColor: 'var(--yellow-jcb)' }}
+      transition={{ duration: 0.3 }}
+    >
+      <div className="text-4xl lg:text-6xl font-montserrat font-black text-jcb-yellow mb-2">{count}{suffix}</div>
+      <div className="text-white font-inter font-medium tracking-wide uppercase text-sm">{label}</div>
+    </motion.div>
   );
 };
 
 const Home = () => {
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 1000], [0, 200]);
+  const opacity = useTransform(scrollY, [0, 500], [1, 0]);
+
   const services = [
-    { icon: '🚜', title: 'Backhoe Loader Rental', desc: 'Daily, weekly & monthly rental of powerful JCB backhoe loaders for any scale of work.' },
-    { icon: '🌿', title: 'Site Clearing', desc: 'Complete site clearing services — removing debris, trees, and surface obstacles efficiently.' },
-    { icon: '📐', title: 'Land Leveling', desc: 'Precise land leveling and grading for construction, agriculture, and development projects.' },
-    { icon: '⛏️', title: 'Excavation Work', desc: 'Deep excavation for foundations, basements, drainage lines, and infrastructure projects.' },
+    { icon: '🚜', title: 'BACKHOE LOADER RENTAL', desc: 'Daily, weekly & monthly rental of powerful JCB backhoe loaders for any scale of work.' },
+    { icon: '🌿', title: 'SITE CLEARING', desc: 'Complete site clearing services — removing debris, trees, and surface obstacles efficiently.' },
+    { icon: '📐', title: 'LAND LEVELING', desc: 'Precise land leveling and grading for construction, agriculture, and development projects.' },
+    { icon: '⛏️', title: 'EXCAVATION WORK', desc: 'Deep excavation for foundations, basements, drainage lines, and infrastructure projects.' },
   ];
 
   const whatsappMsg = encodeURIComponent("Hi! I need Backhoe Loader rental service in Sivagangai. Please share availability.");
 
+  // Animation variants
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.15 }
+    }
+  };
+
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 40 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+  };
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-matte-black">
       {/* HERO SECTION */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
-        {/* Background image */}
-        <div className="absolute inset-0 z-0">
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        {/* Background Parallax Image */}
+        <motion.div 
+          className="absolute inset-0 z-0"
+          style={{ y: y1 }}
+        >
           <img
             src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80"
             alt="Backhoe Loader Construction"
-            className="w-full h-full object-cover"
+            className="w-full h-[120%] object-cover object-center"
           />
-          <div className="absolute inset-0 bg-black/60 z-0"></div>
-          <div className="absolute inset-0 hero-gradient"></div>
-        </div>
+        </motion.div>
+        
+        {/* Cinematic Overlays */}
+        <div className="absolute inset-0 bg-black/50 z-0"></div>
+        <div className="absolute inset-0 hero-gradient z-0"></div>
+        <div className="absolute inset-0 hero-vignette z-0"></div>
 
-        {/* Yellow accent line */}
-        <div className="absolute left-0 top-0 bottom-0 w-1 bg-yellow-400 z-10"></div>
+        {/* Diagonal Accent lines for Industrial feel */}
+        <div className="absolute -left-32 -top-32 w-64 h-[150%] bg-jcb-yellow/5 transform rotate-45 z-0 blur-3xl"></div>
+        <div className="absolute right-0 bottom-0 w-1/3 h-1 bg-gradient-to-r from-transparent to-jcb-yellow z-10"></div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-40 flex flex-col items-center">
-          <div className="w-full">
+        <motion.div 
+          className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20"
+          variants={staggerContainer}
+          initial="hidden"
+          animate="show"
+        >
+          <div className="max-w-4xl">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-yellow-400/10 border border-yellow-400/30 rounded-full px-4 py-2 mb-6 animate-fadeInUp">
-              <Zap size={14} className="text-yellow-400" />
-              <span className="text-yellow-400 text-sm font-medium">Sivagangai's Most Trusted JCB Service</span>
-            </div>
+            <motion.div variants={fadeInUp} className="inline-flex items-center gap-3 bg-dark-surface/80 backdrop-blur-md border border-dark-border px-5 py-2.5 rounded mb-8">
+              <span className="w-2 h-2 rounded-full bg-jcb-yellow animate-pulse"></span>
+              <span className="text-white text-sm font-montserrat font-bold tracking-widest uppercase">Premium Earth Moving Services</span>
+            </motion.div>
 
             {/* Heading */}
-            <div className="text-center mb-8">
-              <h1 className="text-5xl sm:text-7xl lg:text-9xl font-black leading-none mb-6 animate-fadeInUp tracking-tighter" style={{ animationDelay: '0.1s' }}>
-                <span className="text-white block">SRI BALAJI</span>
-                <span className="text-yellow-400 block drop-shadow-[0_5px_5px_rgba(0,0,0,0.5)]">EARTH MOVERS</span>
-              </h1>
-              
-              <div className="inline-block bg-yellow-400 text-black font-black px-6 py-2 rounded-full text-sm lg:text-base uppercase tracking-widest animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
-                20+ Years of Trusted Service
-              </div>
-            </div>
-
-            <p className="text-gray-200 text-lg lg:text-2xl leading-relaxed mb-10 animate-fadeInUp text-center max-w-4xl mx-auto drop-shadow-md" style={{ animationDelay: '0.3s' }}>
-              Sivagangai's leading choice for professional JCB backhoe loader rentals, 
-              excavation, and land development services since 2004.
-            </p>
-
-            <p className="text-gray-300 text-lg lg:text-xl leading-relaxed mb-8 animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
-              Professional JCB backhoe loader rental for excavation, site clearing, land leveling and more.
-              Fast, reliable, and affordable — serving Sivagangai and surrounding areas.
-            </p>
+            <motion.h1 variants={fadeInUp} className="text-5xl sm:text-7xl lg:text-[7.5rem] font-black leading-[1.1] mb-8 font-montserrat tracking-tighter">
+              <span className="text-white block drop-shadow-2xl">SRI BALAJI</span>
+              <span className="text-jcb-yellow block drop-shadow-[0_0_30px_rgba(242,194,0,0.4)]">EARTH MOVERS</span>
+            </motion.h1>
+            
+            {/* Subtitle */}
+            <motion.div variants={fadeInUp} className="flex items-center gap-6 mb-12">
+              <div className="h-1 w-16 bg-jcb-yellow"></div>
+              <p className="text-white text-lg lg:text-2xl font-montserrat font-bold tracking-widest uppercase drop-shadow-md">
+                20+ Years Of Trusted Earth Moving Service
+              </p>
+            </motion.div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-wrap justify-center gap-6 mb-12 animate-fadeInUp" style={{ animationDelay: '0.4s' }}>
-              <Link to="/booking"
-                className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold px-10 py-4 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 shadow-[0_10px_20px_rgba(234,179,8,0.3)]">
-                Book Now <ArrowRight size={18} />
+            <motion.div variants={fadeInUp} className="flex flex-wrap gap-6 mt-14">
+              <Link to="/booking" className="btn-premium text-base sm:text-lg">
+                Book Now <ArrowRight size={20} />
               </Link>
               <a href={`https://wa.me/919443239842?text=${whatsappMsg}`} target="_blank" rel="noopener noreferrer"
-                className="bg-green-600 hover:bg-green-500 text-white font-bold px-10 py-4 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-105 shadow-[0_10px_20px_rgba(22,163,74,0.3)]">
-                <MessageCircle size={18} /> WhatsApp
+                className="bg-[#25D366] hover:bg-[#128C7E] text-white font-montserrat font-bold uppercase tracking-widest px-8 py-4 rounded-md flex items-center gap-3 transition-all duration-400 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_10px_25px_rgba(37,211,102,0.4)] shadow-lg">
+                <MessageCircle size={20} /> WhatsApp Booking
               </a>
-              <Link to="/contact"
-                className="border-2 border-white/50 hover:border-yellow-400 text-white hover:text-yellow-400 font-bold px-10 py-4 rounded-full flex items-center gap-2 transition-all duration-300 hover:bg-white/10">
+              <Link to="/contact" className="btn-outline-premium text-base sm:text-lg">
                 Contact Us
               </Link>
-            </div>
-
-            {/* Phone numbers */}
-            <div className="flex flex-wrap justify-center gap-8 animate-fadeInUp" style={{ animationDelay: '0.5s' }}>
-              <a href="tel:+919443239842" className="flex items-center gap-3 text-white hover:text-yellow-400 transition-colors bg-white/5 px-6 py-3 rounded-full border border-white/10">
-                <Phone size={18} className="text-yellow-400" />
-                <span className="font-bold">+91 94432 39842</span>
-              </a>
-              <a href="tel:+919994289069" className="flex items-center gap-3 text-white hover:text-yellow-400 transition-colors bg-white/5 px-6 py-3 rounded-full border border-white/10">
-                <Phone size={18} className="text-yellow-400" />
-                <span className="font-bold">+91 99942 89069</span>
-              </a>
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
-          <ChevronDown size={28} className="text-yellow-400 opacity-70" />
-        </div>
+        <motion.div 
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
+          style={{ opacity }}
+        >
+          <span className="text-white/50 text-xs font-montserrat font-bold uppercase tracking-widest">Scroll to explore</span>
+          <motion.div 
+            animate={{ y: [0, 10, 0] }}
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+          >
+            <ChevronDown size={32} className="text-jcb-yellow" />
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* STATS SECTION */}
-      <section className="bg-zinc-900 border-y border-zinc-800 py-14">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            <StatCard end={500} label="Projects Completed" />
-            <StatCard end={20} label="Years Experience" />
-            <StatCard end={150} label="Happy Clients" />
-            <StatCard end={24} label="Hour Service" suffix="/7" />
-          </div>
+      <section className="relative -mt-16 z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-40">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          <StatCard end={500} label="Projects Completed" />
+          <StatCard end={20} label="Years Experience" />
+          <StatCard end={150} label="Happy Clients" />
+          <StatCard end={24} label="Hour Service" suffix="/7" />
         </div>
       </section>
 
       {/* SERVICES OVERVIEW */}
-      <section className="py-24 bg-black">
+      <section className="py-32 bg-dark-bg relative">
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-dark-border to-transparent"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <p className="text-yellow-400 text-sm font-semibold uppercase tracking-widest mb-3">What We Do</p>
-            <h2 className="text-3xl lg:text-5xl font-black text-white mb-4">Our <span className="text-gradient">Services</span></h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
-              From small excavations to large-scale earth moving — we have the right machine and expertise for your project.
-            </p>
-          </div>
+          <motion.div 
+            className="text-center mb-20"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+          >
+            <motion.div variants={fadeInUp} className="flex items-center justify-center gap-4 mb-4">
+              <div className="h-px w-12 bg-jcb-yellow"></div>
+              <p className="text-jcb-yellow text-sm font-montserrat font-bold uppercase tracking-[0.3em]">Our Expertise</p>
+              <div className="h-px w-12 bg-jcb-yellow"></div>
+            </motion.div>
+            <motion.h2 variants={fadeInUp} className="text-5xl lg:text-7xl font-black font-montserrat text-white tracking-tight uppercase leading-[1.2]">
+              Industrial <span className="text-transparent bg-clip-text bg-gradient-to-r from-jcb-yellow to-[#a68500]">Services</span>
+            </motion.h2>
+          </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
             {services.map((s, i) => (
-              <div key={i} className="bg-zinc-900 border border-zinc-800 hover:border-yellow-400/50 rounded-2xl p-6 card-hover transition-all duration-300 group">
-                <div className="text-4xl mb-4">{s.icon}</div>
-                <h3 className="text-white font-bold mb-3 group-hover:text-yellow-400 transition-colors">{s.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{s.desc}</p>
-              </div>
+              <motion.div 
+                key={i} 
+                className="card-premium p-10 rounded-xl group relative overflow-hidden"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
+              >
+                <div className="absolute -right-10 -top-10 text-[10rem] opacity-5 group-hover:opacity-10 transition-opacity duration-500 font-black">{i+1}</div>
+                <div className="text-5xl mb-8 relative z-10 bg-dark-bg w-20 h-20 flex items-center justify-center rounded-full border border-dark-border group-hover:border-jcb-yellow transition-colors">{s.icon}</div>
+                <h3 className="text-white font-montserrat font-black text-xl tracking-wide mb-4 relative z-10 group-hover:text-jcb-yellow transition-colors">{s.title}</h3>
+                <p className="text-gray-text text-base leading-relaxed relative z-10">{s.desc}</p>
+                
+                <div className="mt-8 relative z-10 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                  <Link to="/services" className="text-jcb-yellow font-montserrat font-bold uppercase text-sm tracking-wider flex items-center gap-2">
+                    Learn More <ArrowRight size={16} />
+                  </Link>
+                </div>
+              </motion.div>
             ))}
-          </div>
-
-          <div className="text-center">
-            <Link to="/services"
-              className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 font-semibold border border-yellow-400/30 hover:border-yellow-400 px-6 py-3 rounded-xl transition-all">
-              View All Services <ArrowRight size={16} />
-            </Link>
           </div>
         </div>
       </section>
 
       {/* WHY CHOOSE US */}
-      <section className="py-24 bg-zinc-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <p className="text-yellow-400 text-sm font-semibold uppercase tracking-widest mb-3">Why Choose Us</p>
-              <h2 className="text-3xl lg:text-5xl font-black text-white mb-6">
-                Trusted By <span className="text-gradient">Professionals</span> Across Tamil Nadu
-              </h2>
-              <p className="text-gray-400 leading-relaxed mb-8">
+      <section className="py-32 bg-matte-black relative overflow-hidden">
+        {/* Background Industrial Pattern */}
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <motion.div
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+              variants={staggerContainer}
+            >
+              <motion.p variants={fadeInUp} className="text-jcb-yellow text-sm font-montserrat font-bold uppercase tracking-[0.3em] mb-4">Why Choose Us</motion.p>
+              <motion.h2 variants={fadeInUp} className="text-4xl lg:text-6xl font-black font-montserrat text-white mb-8 leading-[1.1] tracking-tight uppercase">
+                The Standard In <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-jcb-yellow to-[#a68500]">Earth Moving</span>
+              </motion.h2>
+              <motion.p variants={fadeInUp} className="text-gray-text text-lg leading-relaxed mb-10 font-inter">
                 With over a decade of experience in earth moving and construction equipment rental, 
                 Sri Balaji Earth Movers delivers reliable, efficient, and professional backhoe loader services 
-                that meet the highest standards.
-              </p>
-              <ul className="space-y-4">
+                that meet the highest industry standards.
+              </motion.p>
+              
+              <ul className="space-y-8 mb-14">
                 {[
-                  { icon: <Shield size={20} />, text: 'Fully insured & certified operators' },
-                  { icon: <Clock size={20} />, text: '24/7 availability and on-call service' },
-                  { icon: <CheckCircle size={20} />, text: 'Well-maintained modern machinery' },
-                  { icon: <Star size={20} />, text: 'Competitive pricing, no hidden charges' },
+                  { icon: <Shield size={24} />, text: 'FULLY INSURED & CERTIFIED OPERATORS' },
+                  { icon: <Clock size={24} />, text: '24/7 AVAILABILITY & ON-CALL SERVICE' },
+                  { icon: <CheckCircle size={24} />, text: 'WELL-MAINTAINED MODERN MACHINERY' },
+                  { icon: <Star size={24} />, text: 'COMPETITIVE PRICING, NO HIDDEN CHARGES' },
                 ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-gray-300">
-                    <span className="text-yellow-400 flex-shrink-0">{item.icon}</span>
+                  <motion.li key={i} variants={fadeInUp} className="flex items-center gap-5 text-white font-montserrat font-bold tracking-wide text-sm sm:text-base">
+                    <div className="flex-shrink-0 w-14 h-14 bg-dark-surface rounded-md flex items-center justify-center text-jcb-yellow border border-dark-border shadow-sm">
+                      {item.icon}
+                    </div>
                     {item.text}
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
-              <div className="mt-8 flex gap-4">
-                <Link to="/booking" className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold px-8 py-4 rounded-full flex items-center gap-2 transition-all hover:scale-105 shadow-lg">
-                  Book Now <ArrowRight size={16} />
+
+              <motion.div variants={fadeInUp} className="flex flex-wrap gap-6">
+                <Link to="/booking" className="btn-premium text-sm sm:text-base">
+                  Book Now
                 </Link>
-                <Link to="/projects" className="border-2 border-zinc-700 hover:border-yellow-400 text-white hover:text-yellow-400 px-8 py-4 rounded-full transition-all hover:bg-white/5">
+                <Link to="/projects" className="btn-outline-premium text-sm sm:text-base">
                   View Projects
                 </Link>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
             {/* Image */}
-            <div className="relative">
-              <div className="absolute -inset-4 bg-yellow-400/10 rounded-3xl blur-xl"></div>
-              <img
-                src="https://images.unsplash.com/photo-1590496793929-36417d3117de?w=800&q=80"
-                alt="JCB Backhoe Loader at work"
-                className="relative rounded-2xl w-full object-cover shadow-2xl border border-zinc-800"
-              />
-              {/* Badge overlay */}
-              <div className="absolute -bottom-5 -left-5 bg-yellow-400 text-black px-6 py-4 rounded-2xl shadow-2xl font-black text-xl">
-                20+ Years
-                <div className="text-xs font-bold uppercase tracking-wider opacity-80">Trusted Service</div>
+            <motion.div 
+              className="relative"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              <div className="absolute -inset-4 bg-jcb-yellow/20 rounded blur-2xl z-0"></div>
+              <div className="relative z-10 border border-dark-border rounded overflow-hidden shadow-2xl">
+                <img
+                  src="https://images.unsplash.com/photo-1590496793929-36417d3117de?w=800&q=80"
+                  alt="JCB Backhoe Loader at work"
+                  className="w-full object-cover transform hover:scale-105 transition-transform duration-700"
+                />
               </div>
-            </div>
+              {/* Badge overlay */}
+              <div className="absolute -bottom-10 -left-10 bg-jcb-yellow text-matte-black p-8 rounded shadow-2xl z-20 hidden md:block">
+                <div className="font-montserrat font-black text-5xl mb-1">20+</div>
+                <div className="text-sm font-montserrat font-bold uppercase tracking-widest">Years Of Excellence</div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* CTA BANNER */}
-      <section className="py-20 bg-yellow-400 relative overflow-hidden">
+      <section className="py-24 bg-jcb-yellow relative overflow-hidden">
+        {/* Industrial Stripes Background */}
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #000 0, #000 1px, transparent 0, transparent 50%)', backgroundSize: '20px 20px' }}></div>
+          <div className="absolute inset-0" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #000 0, #000 2px, transparent 0, transparent 20px)' }}></div>
         </div>
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl lg:text-5xl font-black text-black mb-4">
-            Ready to Start Your Project?
-          </h2>
-          <p className="text-black/70 text-lg mb-8">
+        
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+          <motion.h2 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl lg:text-6xl font-black font-montserrat text-matte-black mb-8 uppercase tracking-tight leading-[1.2]"
+          >
+            Ready To Start Your Project?
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-matte-black/80 text-xl mb-10 font-inter font-medium max-w-2xl mx-auto"
+          >
             Contact us today for quick availability & competitive quotes. We serve Sivagangai and all surrounding areas.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
+          </motion.p>
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="flex flex-wrap justify-center gap-6"
+          >
             <a href="tel:+919443239842"
-              className="bg-black text-yellow-400 font-bold px-10 py-4 rounded-full flex items-center gap-2 hover:bg-zinc-900 transition-all hover:scale-105 shadow-xl">
-              <Phone size={18} /> Call Now
+              className="bg-matte-black text-jcb-yellow font-montserrat font-bold uppercase tracking-widest px-8 py-4 rounded-md flex items-center gap-3 transition-all duration-400 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_10px_25px_rgba(0,0,0,0.3)] shadow-xl">
+              <Phone size={20} /> Call Now
             </a>
             <a href={`https://wa.me/919443239842?text=${whatsappMsg}`} target="_blank" rel="noopener noreferrer"
-              className="bg-green-600 text-white font-bold px-10 py-4 rounded-full flex items-center gap-2 hover:bg-green-500 transition-all hover:scale-105 shadow-xl">
-              <MessageCircle size={18} /> WhatsApp
+              className="bg-matte-black text-white font-montserrat font-bold uppercase tracking-widest px-8 py-4 rounded-md flex items-center gap-3 transition-all duration-400 hover:bg-[#25D366] hover:text-white hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_10px_25px_rgba(37,211,102,0.4)] shadow-xl border border-matte-black">
+              <MessageCircle size={20} /> WhatsApp
             </a>
-          </div>
+          </motion.div>
         </div>
       </section>
     </div>

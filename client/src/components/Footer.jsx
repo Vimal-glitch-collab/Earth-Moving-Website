@@ -6,39 +6,39 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-zinc-950 border-t border-zinc-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+    <footer className="bg-matte-black border-t border-dark-border">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-yellow-400 rounded-xl flex items-center justify-center font-black text-black text-xl">
+            <Link to="/" className="flex items-center gap-4 group mb-6 inline-flex">
+              <div className="w-12 h-12 bg-jcb-yellow rounded flex items-center justify-center font-montserrat font-black text-black-matte text-xl group-hover:scale-105 transition-transform shadow-[0_0_15px_rgba(242,194,0,0.2)]">
                 SB
               </div>
               <div>
-                <div className="text-white font-black text-sm tracking-tighter uppercase leading-none">SRI BALAJI</div>
-                <div className="text-yellow-400 text-[10px] font-bold tracking-[0.2em] uppercase leading-none mt-1">EARTH MOVERS</div>
+                <div className="text-white font-montserrat font-black text-base tracking-tighter uppercase leading-none">SRI BALAJI</div>
+                <div className="text-jcb-yellow font-montserrat text-[10px] font-bold tracking-[0.25em] uppercase leading-none mt-1.5">EARTH MOVERS</div>
               </div>
-            </div>
-            <p className="text-gray-400 text-sm leading-relaxed mb-5">
+            </Link>
+            <p className="text-gray-text text-sm leading-relaxed mb-6 font-inter">
               Professional backhoe loader rental services in Sivagangai. Trusted by construction professionals across Tamil Nadu.
             </p>
-            <div className="flex gap-3">
+            <div className="flex gap-4">
               <a href="https://wa.me/919443239842" target="_blank" rel="noopener noreferrer"
-                className="w-9 h-9 rounded-lg bg-green-600 hover:bg-green-500 flex items-center justify-center transition-colors">
-                <MessageCircle size={16} className="text-white" />
+                className="w-10 h-10 rounded bg-dark-surface border border-dark-border hover:border-jcb-yellow hover:text-jcb-yellow flex items-center justify-center transition-all">
+                <MessageCircle size={18} className="text-current" />
               </a>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-white font-semibold mb-5 flex items-center gap-2">
-              <span className="w-1 h-5 bg-yellow-400 rounded"></span>
+            <h3 className="text-white font-montserrat font-bold uppercase tracking-widest text-sm mb-6 flex items-center gap-3">
+              <span className="w-2 h-2 bg-jcb-yellow"></span>
               Quick Links
             </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-4">
               {[
                 { to: '/', label: 'Home' },
                 { to: '/services', label: 'Services' },
@@ -48,8 +48,8 @@ const Footer = () => {
               ].map(link => (
                 <li key={link.to}>
                   <Link to={link.to}
-                    className="text-gray-400 hover:text-yellow-400 text-sm transition-colors flex items-center gap-2 group">
-                    <span className="w-1.5 h-1.5 bg-yellow-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    className="text-gray-text hover:text-jcb-yellow text-sm font-inter transition-colors flex items-center gap-3 group">
+                    <span className="w-0 h-px bg-jcb-yellow transition-all duration-300 group-hover:w-3"></span>
                     {link.label}
                   </Link>
                 </li>
@@ -59,11 +59,11 @@ const Footer = () => {
 
           {/* Services */}
           <div>
-            <h3 className="text-white font-semibold mb-5 flex items-center gap-2">
-              <span className="w-1 h-5 bg-yellow-400 rounded"></span>
+            <h3 className="text-white font-montserrat font-bold uppercase tracking-widest text-sm mb-6 flex items-center gap-3">
+              <span className="w-2 h-2 bg-jcb-yellow"></span>
               Services
             </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-4">
               {[
                 'Backhoe Loader Rental',
                 'Site Clearing',
@@ -71,8 +71,8 @@ const Footer = () => {
                 'Excavation Work',
               ].map(service => (
                 <li key={service}>
-                  <span className="text-gray-400 text-sm flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-yellow-400 rounded-full"></span>
+                  <span className="text-gray-text text-sm font-inter flex items-center gap-3">
+                    <span className="w-1.5 h-1.5 bg-dark-border group-hover:bg-jcb-yellow transition-colors"></span>
                     {service}
                   </span>
                 </li>
@@ -82,24 +82,28 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h3 className="text-white font-semibold mb-5 flex items-center gap-2">
-              <span className="w-1 h-5 bg-yellow-400 rounded"></span>
+            <h3 className="text-white font-montserrat font-bold uppercase tracking-widest text-sm mb-6 flex items-center gap-3">
+              <span className="w-2 h-2 bg-jcb-yellow"></span>
               Contact Info
             </h3>
-            <ul className="space-y-4">
+            <ul className="space-y-5">
               <li>
-                <a href="tel:+919443239842" className="flex items-start gap-3 text-gray-400 hover:text-yellow-400 transition-colors group">
-                  <Phone size={16} className="mt-0.5 flex-shrink-0 text-yellow-400" />
-                  <div className="text-sm">
-                    <div>+91 94432 39842</div>
+                <a href="tel:+919443239842" className="flex items-start gap-4 text-gray-text hover:text-jcb-yellow transition-colors group">
+                  <div className="p-2 bg-dark-surface rounded group-hover:bg-jcb-yellow/10 transition-colors">
+                    <Phone size={16} className="text-jcb-yellow" />
+                  </div>
+                  <div className="text-sm font-inter pt-1">
+                    <div className="mb-1 font-medium text-white group-hover:text-jcb-yellow transition-colors">+91 94432 39842</div>
                     <div>+91 99942 89069</div>
                   </div>
                 </a>
               </li>
               <li>
-                <div className="flex items-start gap-3 text-gray-400">
-                  <MapPin size={16} className="mt-0.5 flex-shrink-0 text-yellow-400" />
-                  <p className="text-sm">
+                <div className="flex items-start gap-4 text-gray-text">
+                  <div className="p-2 bg-dark-surface rounded">
+                    <MapPin size={16} className="text-jcb-yellow" />
+                  </div>
+                  <p className="text-sm font-inter leading-relaxed pt-1">
                     88, Sri Balaji Bhavanam<br />
                     Senthamil Nagar<br />
                     Railway Station Road<br />
@@ -113,12 +117,12 @@ const Footer = () => {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-zinc-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-gray-500 text-sm text-center">
+        <div className="border-t border-dark-border pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-gray-text text-sm text-center font-inter">
             © {currentYear} Sri Balaji Earth Movers. All rights reserved.
           </p>
-          <div className="flex gap-4 text-sm">
-            <Link to="/admin/login" className="text-gray-600 hover:text-yellow-400 transition-colors text-xs">
+          <div className="flex gap-6 text-sm font-inter font-medium">
+            <Link to="/admin/login" className="text-gray-text hover:text-white transition-colors text-xs uppercase tracking-wider">
               Admin Portal
             </Link>
           </div>
