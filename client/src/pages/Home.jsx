@@ -133,7 +133,7 @@ const Home = () => {
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-7xl md:text-[9rem] lg:text-[11rem] font-bebas leading-[0.85] tracking-tighter mb-8"
+              className="text-6xl md:text-[8rem] lg:text-[9.5rem] font-bebas leading-[0.85] tracking-tighter mb-8"
             >
               MOVING <span className="text-industrial-yellow text-glow">EARTH.</span><br />
               BUILDING <span className="text-white">TRUST.</span>
@@ -167,8 +167,8 @@ const Home = () => {
         {/* Animated Hero Stats Overlay */}
         <div className="absolute bottom-20 right-6 md:right-20 z-20 hidden lg:block">
           <div className="grid grid-cols-1 gap-12 border-l border-white/10 pl-12 py-6 backdrop-blur-sm">
-            <StatItem end={10} label="Years Experience" delay={1} />
-            <StatItem end={100} label="Projects Delivered" delay={1.2} />
+            <StatItem end={20} label="Years Experience" delay={1} />
+            <StatItem end={2000} label="Projects Delivered" delay={1.2} />
             <StatItem end={4.6} label="Customer Rating" suffix="★" delay={1.4} />
           </div>
         </div>
@@ -201,7 +201,8 @@ const Home = () => {
                 <span className="text-industrial-yellow">INDUSTRIAL LANDSCAPE</span>
               </h3>
               <p className="font-inter text-gray-muted text-lg mb-10 leading-relaxed max-w-xl">
-                Sri Balaji Earth Movers isn't just an equipment rental service; it's a legacy of precision and power. For over a decade, we have been the backbone of Sivaganga's infrastructure, providing unmatched heavy machinery solutions for government and private projects.
+              <p className="font-inter text-gray-muted text-lg mb-10 leading-relaxed max-w-xl">
+                Sri Balaji Earth Movers isn't just an equipment rental service; it's a legacy of precision and power. For over two decades, we have been the backbone of Sivaganga's infrastructure, providing unmatched heavy machinery solutions for government and private projects.
               </p>
               
               <div className="grid grid-cols-2 gap-8 mb-12">
@@ -306,10 +307,10 @@ const Home = () => {
                 specs: ['Heavy-duty Digging', 'Advanced Hydraulics']
               },
               { 
-                name: 'Caterpillar D8', 
-                type: 'Track-Type Tractor', 
-                img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80',
-                specs: ['Desert Optimized', '1000HP Performance']
+                name: 'JCB 3DX Super', 
+                type: 'Industrial Earthmover', 
+                img: 'https://images.unsplash.com/photo-1541888946425-d81bb19480c5?auto=format&fit=crop&w=1200&q=80',
+                specs: ['Precision Grading', 'High Efficiency']
               }
             ].map((machine, idx) => (
               <motion.div 
@@ -344,17 +345,17 @@ const Home = () => {
       {/* --- TESTIMONIALS (Glass Marquee) --- */}
       <section className="py-32 bg-charcoal overflow-hidden">
         <div className="container mx-auto px-6 mb-20">
-          <div className="text-center">
-            <h2 className="text-4xl font-bebas tracking-[0.4em] mb-4">CLIENT VOICES</h2>
-            <div className="flex justify-center items-center gap-2 text-industrial-yellow mb-2">
-              {[...Array(5)].map((_, i) => <Star key={i} fill="currentColor" size={24} />)}
+          <div className="text-center max-w-3xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bebas tracking-[0.4em] mb-6">CLIENT <span className="text-industrial-yellow">VOICES</span></h2>
+            <div className="flex justify-center items-center gap-3 text-industrial-yellow mb-6">
+              {[...Array(5)].map((_, i) => <Star key={i} fill="currentColor" size={28} />)}
             </div>
-            <p className="text-gray-muted font-bebas text-2xl tracking-widest uppercase">4.6 Google Rating</p>
+            <p className="text-gray-muted font-bebas text-2xl tracking-[0.3em] uppercase">4.6 Google Rating • 2000+ Verified Reviews</p>
           </div>
         </div>
 
-        <div className="marquee-container">
-          <div className="marquee-content flex gap-8">
+        <div className="marquee-container relative py-10">
+          <div className="marquee-content flex gap-12">
             {[
               "BEST SERVICE IN TAMIL NADU",
               "PROFESSIONAL & RESPONSIVE",
@@ -363,13 +364,13 @@ const Home = () => {
               "EXCELLENT OPERATORS",
               "STATE-OF-THE-ART FLEET"
             ].map((text, i) => (
-              <div key={i} className="glass-morphism px-16 py-12 min-w-[400px]">
-                <p className="text-2xl font-bebas tracking-wider mb-6 italic">"{text}"</p>
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-industrial-yellow/20 flex items-center justify-center text-industrial-yellow font-bold">
+              <div key={i} className="glass-morphism px-16 py-14 min-w-[450px] text-center border-white/10 hover:border-industrial-yellow/30 transition-all duration-700">
+                <p className="text-3xl font-bebas tracking-widest mb-8 italic text-white/90">"{text}"</p>
+                <div className="flex flex-col items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-industrial-yellow/20 flex items-center justify-center text-industrial-yellow font-bold text-xl border border-industrial-yellow/20">
                     {text[0]}
                   </div>
-                  <span className="font-inter text-xs font-bold tracking-widest text-gray-muted uppercase">Verified Industrial Client</span>
+                  <span className="font-inter text-[10px] font-black tracking-[0.4em] text-gray-muted uppercase">Verified Industrial Client</span>
                 </div>
               </div>
             ))}
@@ -382,13 +383,13 @@ const Home = () => {
               "EXCELLENT OPERATORS",
               "STATE-OF-THE-ART FLEET"
             ].map((text, i) => (
-              <div key={i + 10} className="glass-morphism px-16 py-12 min-w-[400px]">
-                <p className="text-2xl font-bebas tracking-wider mb-6 italic">"{text}"</p>
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-industrial-yellow/20 flex items-center justify-center text-industrial-yellow font-bold">
+              <div key={i + 10} className="glass-morphism px-16 py-14 min-w-[450px] text-center border-white/10 hover:border-industrial-yellow/30 transition-all duration-700">
+                <p className="text-3xl font-bebas tracking-widest mb-8 italic text-white/90">"{text}"</p>
+                <div className="flex flex-col items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-industrial-yellow/20 flex items-center justify-center text-industrial-yellow font-bold text-xl border border-industrial-yellow/20">
                     {text[0]}
                   </div>
-                  <span className="font-inter text-xs font-bold tracking-widest text-gray-muted uppercase">Verified Industrial Client</span>
+                  <span className="font-inter text-[10px] font-black tracking-[0.4em] text-gray-muted uppercase">Verified Industrial Client</span>
                 </div>
               </div>
             ))}

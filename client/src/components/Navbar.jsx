@@ -36,21 +36,21 @@ const Navbar = () => {
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-4 group relative z-50">
+          <Link to="/" className="flex items-center gap-6 group relative z-50">
             <div className="relative">
-              <Hexagon className="w-12 h-12 text-industrial-yellow fill-industrial-yellow/10 group-hover:rotate-90 transition-transform duration-700" />
-              <span className="absolute inset-0 flex items-center justify-center font-bebas text-2xl text-white font-bold group-hover:scale-110 transition-transform">
+              <Hexagon className="w-16 h-16 text-industrial-yellow fill-industrial-yellow/10 group-hover:rotate-90 transition-transform duration-700" />
+              <span className="absolute inset-0 flex items-center justify-center font-bebas text-3xl text-white font-bold group-hover:scale-110 transition-transform">
                 SB
               </span>
             </div>
             <div className="flex flex-col">
-              <span className="font-bebas text-2xl tracking-widest text-white leading-none">SRI BALAJI</span>
-              <span className="font-inter text-[8px] font-black tracking-[0.4em] text-industrial-yellow uppercase leading-none mt-1">EARTH MOVERS</span>
+              <span className="font-bebas text-4xl tracking-widest text-white leading-none">SRI BALAJI</span>
+              <span className="font-inter text-[10px] font-black tracking-[0.5em] text-industrial-yellow uppercase leading-none mt-2">EARTH MOVERS</span>
             </div>
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-4">
             {navLinks.map(link => (
               <NavLink
                 key={link.to}

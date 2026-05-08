@@ -21,7 +21,7 @@ const Contact = () => {
     {
       icon: <Clock size={32} />,
       title: 'FLEET UPTIME',
-      details: ['Mon - Sun: 06:00 - 22:00', 'Emergency Support: 24/7'],
+      details: ['Mon - Sun: 06:00 - 18:00', 'Emergency Support: 24/7'],
       action: '/booking',
       actionLabel: 'Log Inquiry'
     }

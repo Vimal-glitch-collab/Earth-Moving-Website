@@ -45,18 +45,27 @@ mongoose.connect(process.env.MONGO_URI)
   .then(async () => {
     console.log('✅ MongoDB Connected');
     
-    // Seed default admin if not exists
+    // Seed/Update admin
     const Admin = require('./models/Admin');
     const bcrypt = require('bcryptjs');
-    const existing = await Admin.findOne({ email: process.env.ADMIN_EMAIL || 'admin@sribalaji.com' });
+    const adminEmail = process.env.ADMIN_EMAIL || 'admin@sribalaji.com';
+    const adminPass = process.env.ADMIN_PASSWORD || 'sribalaji@2024';
+    
+    const existing = await Admin.findOne({ email: adminEmail });
+    const hashed = await bcrypt.hash(adminPass, 10);
+    
     if (!existing) {
-      const hashed = await bcrypt.hash(process.env.ADMIN_PASSWORD || 'sribalaji@2024', 10);
       await Admin.create({
-        email: process.env.ADMIN_EMAIL || 'admin@sribalaji.com',
+        email: adminEmail,
         password: hashed,
-        name: 'Admin'
+        name: 'Admin User'
       });
-      console.log('✅ Default admin created: admin@sribalaji.com / sribalaji@2024');
+      console.log(`✅ Admin created: ${adminEmail}`);
+    } else {
+      // Update password to match .env
+      existing.password = hashed;
+      await existing.save();
+      console.log(`✅ Admin credentials synchronized for: ${adminEmail}`);
     }
 
     app.listen(PORT, () => {

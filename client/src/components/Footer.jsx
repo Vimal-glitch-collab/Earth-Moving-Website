@@ -14,13 +14,13 @@ const Footer = () => {
           
           {/* Brand & Mission */}
           <div className="lg:col-span-1">
-            <Link to="/" className="flex items-center gap-4 group mb-8 inline-flex">
-              <div className="w-12 h-12 bg-industrial-yellow rounded-sm flex items-center justify-center font-bebas text-2xl text-black font-bold group-hover:rotate-90 transition-transform duration-500">
+            <Link to="/" className="flex items-center gap-6 group mb-10 inline-flex">
+              <div className="w-16 h-16 bg-industrial-yellow rounded-sm flex items-center justify-center font-bebas text-3xl text-black font-bold group-hover:rotate-90 transition-transform duration-500">
                 SB
               </div>
               <div>
-                <div className="text-white font-bebas text-2xl tracking-widest leading-none">SRI BALAJI</div>
-                <div className="text-industrial-yellow font-inter text-[8px] font-black tracking-[0.4em] uppercase leading-none mt-1">EARTH MOVERS</div>
+                <div className="text-white font-bebas text-4xl tracking-widest leading-none">SRI BALAJI</div>
+                <div className="text-industrial-yellow font-inter text-[10px] font-black tracking-[0.5em] uppercase leading-none mt-2">EARTH MOVERS</div>
               </div>
             </Link>
             <p className="text-gray-muted text-sm leading-relaxed mb-10 font-inter max-w-xs">
@@ -94,6 +94,13 @@ const Footer = () => {
                     <p className="text-lg font-bebas tracking-wider">+91 99942 89069</p>
                   </div>
                 </a>
+              </li>
+              <li className="flex items-start gap-4 text-gray-muted">
+                <Clock size={18} className="text-industrial-yellow mt-1" />
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest mb-1">Working Hours</p>
+                  <p className="text-sm font-inter leading-relaxed">06:00 AM – 06:00 PM</p>
+                </div>
               </li>
               <li className="flex items-start gap-4 text-gray-muted">
                 <MapPin size={18} className="text-industrial-yellow mt-1" />
