@@ -78,64 +78,66 @@ const Home = () => {
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         {/* Background Parallax Image */}
         <motion.div 
-          className="absolute inset-0 z-0"
+          className="absolute inset-0 w-full h-[120%] z-0"
           style={{ y: y1 }}
         >
           <img
             src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80"
             alt="Backhoe Loader Construction"
-            className="w-full h-[120%] object-cover object-center"
+            className="w-full h-full object-cover object-center filter contrast-125"
           />
         </motion.div>
         
         {/* Cinematic Overlays */}
-        <div className="absolute inset-0 bg-black/50 z-0"></div>
-        <div className="absolute inset-0 hero-gradient z-0"></div>
-        <div className="absolute inset-0 hero-vignette z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-matte-black z-0"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-black/40 to-black/90 z-0"></div>
 
-        {/* Diagonal Accent lines for Industrial feel */}
-        <div className="absolute -left-32 -top-32 w-64 h-[150%] bg-jcb-yellow/5 transform rotate-45 z-0 blur-3xl"></div>
-        <div className="absolute right-0 bottom-0 w-1/3 h-1 bg-gradient-to-r from-transparent to-jcb-yellow z-10"></div>
+        {/* Industrial Accents */}
+        <div className="absolute left-0 top-0 w-1/3 h-full bg-gradient-to-r from-black to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute right-0 bottom-0 w-1/2 h-2 bg-gradient-to-r from-transparent via-jcb-yellow to-jcb-yellow z-20"></div>
 
         <motion.div 
-          className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20"
+          className="relative z-20 w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 mt-16 lg:mt-0"
           variants={staggerContainer}
           initial="hidden"
           animate="show"
         >
-          <div className="max-w-4xl">
+          <div className="max-w-5xl">
             {/* Badge */}
-            <motion.div variants={fadeInUp} className="inline-flex items-center gap-3 bg-dark-surface/80 backdrop-blur-md border border-dark-border px-5 py-2.5 rounded mb-8">
-              <span className="w-2 h-2 rounded-full bg-jcb-yellow animate-pulse"></span>
-              <span className="text-white text-sm font-montserrat font-bold tracking-widest uppercase">Premium Earth Moving Services</span>
+            <motion.div variants={fadeInUp} className="inline-flex items-center gap-4 bg-black/40 backdrop-blur-md border-l-4 border-jcb-yellow px-6 py-3 mb-10">
+              <span className="w-2.5 h-2.5 rounded-full bg-jcb-yellow animate-pulse shadow-[0_0_10px_#f2c200]"></span>
+              <span className="text-white text-sm font-montserrat font-bold tracking-[0.2em] uppercase">Premium Earth Moving Enterprise</span>
             </motion.div>
 
             {/* Heading */}
-            <motion.h1 variants={fadeInUp} className="text-5xl sm:text-7xl lg:text-[7.5rem] font-black leading-[1.1] mb-8 font-montserrat tracking-tighter">
-              <span className="text-white block drop-shadow-2xl">SRI BALAJI</span>
-              <span className="text-jcb-yellow block drop-shadow-[0_0_30px_rgba(242,194,0,0.4)]">EARTH MOVERS</span>
+            <motion.h1 variants={fadeInUp} className="text-6xl sm:text-7xl lg:text-[8rem] xl:text-[9rem] font-black leading-[0.9] mb-8 font-montserrat tracking-tighter drop-shadow-2xl">
+              <span className="text-white block">SRI BALAJI</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-jcb-yellow to-[#d4aa00] block drop-shadow-[0_0_40px_rgba(242,194,0,0.3)]">EARTH MOVERS</span>
             </motion.h1>
             
             {/* Subtitle */}
-            <motion.div variants={fadeInUp} className="flex items-center gap-6 mb-12">
-              <div className="h-1 w-16 bg-jcb-yellow"></div>
-              <p className="text-white text-lg lg:text-2xl font-montserrat font-bold tracking-widest uppercase drop-shadow-md">
-                20+ Years Of Trusted Earth Moving Service
+            <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row sm:items-center gap-6 mb-14 max-w-3xl">
+              <div className="hidden sm:block h-1 w-20 bg-jcb-yellow"></div>
+              <p className="text-gray-300 text-lg lg:text-2xl font-inter font-light leading-relaxed border-l-4 sm:border-l-0 border-jcb-yellow pl-4 sm:pl-0">
+                Over <strong className="text-white font-bold">20+ years</strong> of delivering reliable, efficient, and heavy-duty construction equipment solutions across Tamil Nadu.
               </p>
             </motion.div>
 
             {/* CTA Buttons */}
-            <motion.div variants={fadeInUp} className="flex flex-wrap gap-6 mt-14">
-              <Link to="/booking" className="btn-premium text-base sm:text-lg">
-                Book Now <ArrowRight size={20} />
+            <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row flex-wrap gap-6 items-start sm:items-center">
+              <Link to="/booking" className="btn-premium px-10 py-5 text-lg w-full sm:w-auto">
+                BOOK EQUIPMENT <ArrowRight size={24} />
+              </Link>
+              <Link to="/projects" className="btn-outline-premium px-10 py-5 text-lg w-full sm:w-auto border-gray-400 text-gray-200 hover:border-white hover:text-black-matte">
+                VIEW OUR WORK
               </Link>
               <a href={`https://wa.me/919443239842?text=${whatsappMsg}`} target="_blank" rel="noopener noreferrer"
-                className="bg-[#25D366] hover:bg-[#128C7E] text-white font-montserrat font-bold uppercase tracking-widest px-8 py-4 rounded-md flex items-center gap-3 transition-all duration-400 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_10px_25px_rgba(37,211,102,0.4)] shadow-lg">
-                <MessageCircle size={20} /> WhatsApp Booking
+                className="flex items-center gap-3 text-white font-montserrat font-bold uppercase tracking-widest text-sm hover:text-jcb-yellow transition-colors group mt-4 sm:mt-0 sm:ml-4">
+                <span className="w-12 h-12 rounded-full bg-[#25D366] flex items-center justify-center group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(37,211,102,0.4)]">
+                  <MessageCircle size={20} className="text-white" />
+                </span>
+                WhatsApp Us
               </a>
-              <Link to="/contact" className="btn-outline-premium text-base sm:text-lg">
-                Contact Us
-              </Link>
             </motion.div>
           </div>
         </motion.div>
@@ -166,45 +168,57 @@ const Home = () => {
       </section>
 
       {/* SERVICES OVERVIEW */}
-      <section className="py-32 bg-dark-bg relative">
+      <section className="py-40 bg-dark-bg relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-dark-border to-transparent"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Subtle grid pattern background */}
+        <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '100px 100px' }}></div>
+
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div 
-            className="text-center mb-20"
+            className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-24 gap-10"
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
           >
-            <motion.div variants={fadeInUp} className="flex items-center justify-center gap-4 mb-4">
-              <div className="h-px w-12 bg-jcb-yellow"></div>
-              <p className="text-jcb-yellow text-sm font-montserrat font-bold uppercase tracking-[0.3em]">Our Expertise</p>
-              <div className="h-px w-12 bg-jcb-yellow"></div>
+            <div className="max-w-3xl">
+              <motion.div variants={fadeInUp} className="flex items-center gap-4 mb-6">
+                <div className="h-1 w-12 bg-jcb-yellow"></div>
+                <p className="text-jcb-yellow text-sm font-montserrat font-bold uppercase tracking-[0.3em]">Our Expertise</p>
+              </motion.div>
+              <motion.h2 variants={fadeInUp} className="text-5xl lg:text-7xl font-black font-montserrat text-white tracking-tight uppercase leading-[1.1]">
+                Industrial <span className="text-transparent bg-clip-text bg-gradient-to-r from-jcb-yellow to-[#a68500]">Services</span>
+              </motion.h2>
+            </div>
+            <motion.div variants={fadeInUp}>
+              <Link to="/services" className="flex items-center gap-3 text-white hover:text-jcb-yellow font-montserrat font-bold uppercase tracking-widest text-sm transition-colors group">
+                View All Services 
+                <span className="w-10 h-10 rounded-full border border-current flex items-center justify-center group-hover:bg-jcb-yellow group-hover:text-black-matte transition-all">
+                  <ArrowRight size={16} />
+                </span>
+              </Link>
             </motion.div>
-            <motion.h2 variants={fadeInUp} className="text-5xl lg:text-7xl font-black font-montserrat text-white tracking-tight uppercase leading-[1.2]">
-              Industrial <span className="text-transparent bg-clip-text bg-gradient-to-r from-jcb-yellow to-[#a68500]">Services</span>
-            </motion.h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {services.map((s, i) => (
               <motion.div 
                 key={i} 
-                className="card-premium p-10 rounded-xl group relative overflow-hidden"
+                className="group relative bg-dark-surface border border-dark-border hover:border-jcb-yellow/50 transition-all duration-500 rounded-2xl overflow-hidden p-1"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, delay: i * 0.1 }}
               >
-                <div className="absolute -right-10 -top-10 text-[10rem] opacity-5 group-hover:opacity-10 transition-opacity duration-500 font-black">{i+1}</div>
-                <div className="text-5xl mb-8 relative z-10 bg-dark-bg w-20 h-20 flex items-center justify-center rounded-full border border-dark-border group-hover:border-jcb-yellow transition-colors">{s.icon}</div>
-                <h3 className="text-white font-montserrat font-black text-xl tracking-wide mb-4 relative z-10 group-hover:text-jcb-yellow transition-colors">{s.title}</h3>
-                <p className="text-gray-text text-base leading-relaxed relative z-10">{s.desc}</p>
-                
-                <div className="mt-8 relative z-10 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                  <Link to="/services" className="text-jcb-yellow font-montserrat font-bold uppercase text-sm tracking-wider flex items-center gap-2">
-                    Learn More <ArrowRight size={16} />
-                  </Link>
+                <div className="bg-matte-black w-full h-full rounded-xl p-10 relative z-10 flex flex-col justify-between min-h-[400px]">
+                  <div>
+                    <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity font-black text-8xl text-white">0{i+1}</div>
+                    <div className="text-5xl mb-10 w-20 h-20 flex items-center justify-center bg-dark-surface rounded-xl border border-dark-border group-hover:border-jcb-yellow group-hover:bg-jcb-yellow/10 transition-colors shadow-xl">
+                      {s.icon}
+                    </div>
+                    <h3 className="text-white font-montserrat font-black text-2xl tracking-wide mb-6 uppercase leading-snug group-hover:text-jcb-yellow transition-colors">{s.title}</h3>
+                    <p className="text-gray-text text-base leading-relaxed font-inter">{s.desc}</p>
+                  </div>
                 </div>
               </motion.div>
             ))}

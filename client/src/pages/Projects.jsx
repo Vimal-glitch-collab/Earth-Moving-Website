@@ -108,9 +108,9 @@ const Projects = () => {
       <section className="py-24 bg-matte-black relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="columns-1 sm:columns-2 lg:columns-3 gap-8 space-y-8">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="bg-dark-surface border border-dark-border rounded-xl h-[400px] animate-pulse"></div>
+                <div key={i} className="bg-dark-surface border border-dark-border rounded-xl h-64 animate-pulse break-inside-avoid"></div>
               ))}
             </div>
           ) : filtered.length === 0 ? (
@@ -123,7 +123,7 @@ const Projects = () => {
             </motion.div>
           ) : (
             <motion.div 
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              className="columns-1 sm:columns-2 lg:columns-3 gap-8 space-y-8"
               initial="hidden"
               animate="show"
               variants={staggerContainer}
@@ -138,13 +138,13 @@ const Projects = () => {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9 }}
                     transition={{ duration: 0.4 }}
-                    className="group relative bg-dark-surface border border-dark-border rounded-xl overflow-hidden cursor-pointer shadow-xl h-[400px]"
+                    className="group relative bg-dark-surface border border-dark-border rounded-xl overflow-hidden cursor-pointer shadow-xl break-inside-avoid"
                     onClick={() => setLightbox(project)}
                   >
                     <img
                       src={project.imageUrl}
                       alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="w-full object-cover transition-transform duration-700 group-hover:scale-110"
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-matte-black/90 via-matte-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">

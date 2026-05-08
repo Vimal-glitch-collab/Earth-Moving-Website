@@ -83,12 +83,13 @@ const Services = () => {
             {services.map((service, i) => (
               <motion.div
                 key={i}
-                className="card-premium p-10 rounded-xl relative group overflow-hidden"
+                className="card-premium p-10 rounded-xl relative group overflow-hidden flex flex-col justify-between"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, delay: service.delay }}
               >
+                <div className="flex-1">
                 <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
                   <Cog size={120} className="text-white transform group-hover:rotate-90 transition-transform duration-1000" />
                 </div>
@@ -109,7 +110,8 @@ const Services = () => {
                     </li>
                   ))}
                 </ul>
-                <Link to="/booking" className="btn-outline-premium w-full relative z-10 group-hover:bg-jcb-yellow group-hover:text-black-matte group-hover:border-jcb-yellow">
+                </div>
+                <Link to="/booking" className="btn-outline-premium w-full relative z-10 group-hover:bg-jcb-yellow group-hover:text-black-matte group-hover:border-jcb-yellow mt-auto">
                   BOOK THIS SERVICE
                 </Link>
               </motion.div>
