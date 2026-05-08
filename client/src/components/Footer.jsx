@@ -1,55 +1,57 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, MapPin, Mail, MessageCircle } from 'lucide-react';
+import { Phone, MapPin, Mail, MessageCircle, ArrowRight, Globe, Share2, Users } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-matte-black border-t border-dark-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+    <footer className="bg-premium-black border-t border-white/5 relative overflow-hidden">
+      <div className="industrial-grid absolute inset-0 opacity-5 pointer-events-none" />
+      
+      <div className="container mx-auto px-6 pt-24 pb-12 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
           
-          {/* Brand */}
+          {/* Brand & Mission */}
           <div className="lg:col-span-1">
-            <Link to="/" className="flex items-center gap-4 group mb-6 inline-flex">
-              <div className="w-12 h-12 bg-jcb-yellow rounded flex items-center justify-center font-montserrat font-black text-black-matte text-xl group-hover:scale-105 transition-transform shadow-[0_0_15px_rgba(242,194,0,0.2)]">
+            <Link to="/" className="flex items-center gap-4 group mb-8 inline-flex">
+              <div className="w-12 h-12 bg-industrial-yellow rounded-sm flex items-center justify-center font-bebas text-2xl text-black font-bold group-hover:rotate-90 transition-transform duration-500">
                 SB
               </div>
               <div>
-                <div className="text-white font-montserrat font-black text-base tracking-tighter uppercase leading-none">SRI BALAJI</div>
-                <div className="text-jcb-yellow font-montserrat text-[10px] font-bold tracking-[0.25em] uppercase leading-none mt-1.5">EARTH MOVERS</div>
+                <div className="text-white font-bebas text-2xl tracking-widest leading-none">SRI BALAJI</div>
+                <div className="text-industrial-yellow font-inter text-[8px] font-black tracking-[0.4em] uppercase leading-none mt-1">EARTH MOVERS</div>
               </div>
             </Link>
-            <p className="text-gray-text text-sm leading-relaxed mb-6 font-inter">
-              Professional backhoe loader rental services in Sivagangai. Trusted by construction professionals across Tamil Nadu.
+            <p className="text-gray-muted text-sm leading-relaxed mb-10 font-inter max-w-xs">
+              Redefining industrial standards through precision, power, and over two decades of heavy engineering excellence.
             </p>
             <div className="flex gap-4">
-              <a href="https://wa.me/919443239842" target="_blank" rel="noopener noreferrer"
-                className="w-10 h-10 rounded bg-dark-surface border border-dark-border hover:border-jcb-yellow hover:text-jcb-yellow flex items-center justify-center transition-all">
-                <MessageCircle size={18} className="text-current" />
-              </a>
+              {[Globe, Share2, Users].map((Icon, i) => (
+                <a key={i} href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-industrial-yellow hover:text-black hover:border-industrial-yellow transition-all">
+                  <Icon size={18} />
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Core Navigation */}
           <div>
-            <h3 className="text-white font-montserrat font-bold uppercase tracking-widest text-sm mb-6 flex items-center gap-3">
-              <span className="w-2 h-2 bg-jcb-yellow"></span>
-              Quick Links
+            <h3 className="text-white font-bebas text-2xl tracking-widest mb-8 border-b border-white/5 pb-4">
+              NAVIGATION
             </h3>
             <ul className="space-y-4">
               {[
                 { to: '/', label: 'Home' },
                 { to: '/services', label: 'Services' },
-                { to: '/projects', label: 'Our Projects' },
-                { to: '/booking', label: 'Book a Machine' },
-                { to: '/contact', label: 'Contact Us' },
+                { to: '/projects', label: 'Projects' },
+                { to: '/booking', label: 'Inquiry' },
+                { to: '/contact', label: 'Contact' },
               ].map(link => (
                 <li key={link.to}>
                   <Link to={link.to}
-                    className="text-gray-text hover:text-jcb-yellow text-sm font-inter transition-colors flex items-center gap-3 group">
-                    <span className="w-0 h-px bg-jcb-yellow transition-all duration-300 group-hover:w-3"></span>
+                    className="text-gray-muted hover:text-industrial-yellow text-sm font-inter transition-colors flex items-center gap-3 group">
+                    <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0" />
                     {link.label}
                   </Link>
                 </li>
@@ -57,58 +59,49 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Services */}
+          {/* Expertise */}
           <div>
-            <h3 className="text-white font-montserrat font-bold uppercase tracking-widest text-sm mb-6 flex items-center gap-3">
-              <span className="w-2 h-2 bg-jcb-yellow"></span>
-              Services
+            <h3 className="text-white font-bebas text-2xl tracking-widest mb-8 border-b border-white/5 pb-4">
+              EXPERTISE
             </h3>
             <ul className="space-y-4">
               {[
+                'Earth Excavation',
+                'Land Leveling',
                 'Backhoe Loader Rental',
                 'Site Clearing',
-                'Land Leveling',
-                'Excavation Work',
+                'Road Preparation',
               ].map(service => (
-                <li key={service}>
-                  <span className="text-gray-text text-sm font-inter flex items-center gap-3">
-                    <span className="w-1.5 h-1.5 bg-dark-border group-hover:bg-jcb-yellow transition-colors"></span>
-                    {service}
-                  </span>
+                <li key={service} className="text-gray-muted text-sm font-inter flex items-center gap-3 cursor-default hover:text-white transition-colors">
+                  <div className="w-1.5 h-1.5 bg-industrial-yellow rounded-full" />
+                  {service}
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Contact & Support */}
           <div>
-            <h3 className="text-white font-montserrat font-bold uppercase tracking-widest text-sm mb-6 flex items-center gap-3">
-              <span className="w-2 h-2 bg-jcb-yellow"></span>
-              Contact Info
+            <h3 className="text-white font-bebas text-2xl tracking-widest mb-8 border-b border-white/5 pb-4">
+              CONTACT
             </h3>
-            <ul className="space-y-5">
+            <ul className="space-y-6">
               <li>
-                <a href="tel:+919443239842" className="flex items-start gap-4 text-gray-text hover:text-jcb-yellow transition-colors group">
-                  <div className="p-2 bg-dark-surface rounded group-hover:bg-jcb-yellow/10 transition-colors">
-                    <Phone size={16} className="text-jcb-yellow" />
-                  </div>
-                  <div className="text-sm font-inter pt-1">
-                    <div className="mb-1 font-medium text-white group-hover:text-jcb-yellow transition-colors">+91 94432 39842</div>
-                    <div>+91 99942 89069</div>
+                <a href="tel:+919994289069" className="flex items-start gap-4 text-gray-muted hover:text-white transition-colors group">
+                  <Phone size={18} className="text-industrial-yellow mt-1" />
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-widest mb-1">Direct Line</p>
+                    <p className="text-lg font-bebas tracking-wider">+91 99942 89069</p>
                   </div>
                 </a>
               </li>
-              <li>
-                <div className="flex items-start gap-4 text-gray-text">
-                  <div className="p-2 bg-dark-surface rounded">
-                    <MapPin size={16} className="text-jcb-yellow" />
-                  </div>
-                  <p className="text-sm font-inter leading-relaxed pt-1">
-                    88, Sri Balaji Bhavanam<br />
-                    Senthamil Nagar<br />
-                    Railway Station Road<br />
-                    Sivagangai - 630561<br />
-                    Tamil Nadu, India
+              <li className="flex items-start gap-4 text-gray-muted">
+                <MapPin size={18} className="text-industrial-yellow mt-1" />
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest mb-1">Headquarters</p>
+                  <p className="text-sm font-inter leading-relaxed">
+                    Railway Station Rd, Senthamil Nagar,<br />
+                    Sivaganga, TN 630561
                   </p>
                 </div>
               </li>
@@ -116,13 +109,13 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="border-t border-dark-border pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-gray-text text-sm text-center font-inter">
-            © {currentYear} Sri Balaji Earth Movers. All rights reserved.
+        {/* Bottom Bar */}
+        <div className="border-t border-white/5 pt-12 flex flex-col md:flex-row items-center justify-between gap-8">
+          <p className="text-gray-muted text-[10px] font-bold uppercase tracking-[0.4em] text-center">
+            © {currentYear} SRI BALAJI EARTH MOVERS • INDUSTRIAL EXCELLENCE
           </p>
-          <div className="flex gap-6 text-sm font-inter font-medium">
-            <Link to="/admin/login" className="text-gray-text hover:text-white transition-colors text-xs uppercase tracking-wider">
+          <div className="flex gap-12">
+            <Link to="/admin/login" className="text-white/20 hover:text-white text-[10px] font-bold uppercase tracking-[0.3em] transition-colors">
               Admin Portal
             </Link>
           </div>

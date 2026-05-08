@@ -1,223 +1,338 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Phone, MessageCircle, CheckCircle, Star, Zap, Shield, Clock, ChevronDown } from 'lucide-react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { ArrowRight, Phone, MessageCircle, Shield, Clock, Star, CheckCircle, ChevronDown, Award, Users, HardHat } from 'lucide-react';
+import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Animated counter hook
 const useCounter = (end, duration = 2000) => {
   const [count, setCount] = useState(0);
   const [started, setStarted] = useState(false);
   const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
 
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !started) {
-        setStarted(true);
-        let start = 0;
-        const step = end / (duration / 16);
-        const timer = setInterval(() => {
-          start += step;
-          if (start >= end) { setCount(end); clearInterval(timer); }
-          else setCount(Math.floor(start));
-        }, 16);
-      }
-    }, { threshold: 0.5 });
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [end, duration, started]);
+    if (isInView && !started) {
+      setStarted(true);
+      let start = 0;
+      const step = end / (duration / 16);
+      const timer = setInterval(() => {
+        start += step;
+        if (start >= end) { setCount(end); clearInterval(timer); }
+        else setCount(Math.floor(start));
+      }, 16);
+    }
+  }, [end, duration, started, isInView]);
 
   return { count, ref };
 };
 
-const StatCard = ({ end, label, suffix = '+' }) => {
+const StatItem = ({ end, label, suffix = '+', delay = 0 }) => {
   const { count, ref } = useCounter(end);
   return (
     <motion.div 
       ref={ref} 
-      className="text-center p-8 bg-dark-surface border border-dark-border rounded-xl"
-      whileHover={{ y: -10, borderColor: 'var(--yellow-jcb)' }}
-      transition={{ duration: 0.3 }}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay }}
+      className="flex flex-col items-center md:items-start"
     >
-      <div className="text-4xl lg:text-6xl font-montserrat font-black text-jcb-yellow mb-2">{count}{suffix}</div>
-      <div className="text-white font-inter font-medium tracking-wide uppercase text-sm">{label}</div>
+      <span className="text-5xl lg:text-7xl font-bebas text-industrial-yellow tracking-tighter leading-none mb-2">
+        {count}{suffix}
+      </span>
+      <span className="text-gray-muted font-inter text-xs lg:text-sm uppercase tracking-[0.2em] font-bold">
+        {label}
+      </span>
     </motion.div>
   );
 };
 
 const Home = () => {
   const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 1000], [0, 200]);
-  const opacity = useTransform(scrollY, [0, 500], [1, 0]);
+  const heroY = useTransform(scrollY, [0, 500], [0, 150]);
+  const heroOpacity = useTransform(scrollY, [0, 400], [1, 0]);
+  const heroScale = useTransform(scrollY, [0, 800], [1, 1.1]);
+
+  const whatsappMsg = encodeURIComponent("Hi! I'm interested in your earthmoving services. Please share your equipment list and pricing.");
 
   const services = [
-    { icon: '🚜', title: 'BACKHOE LOADER RENTAL', desc: 'Daily, weekly & monthly rental of powerful JCB backhoe loaders for any scale of work.' },
-    { icon: '🌿', title: 'SITE CLEARING', desc: 'Complete site clearing services — removing debris, trees, and surface obstacles efficiently.' },
-    { icon: '📐', title: 'LAND LEVELING', desc: 'Precise land leveling and grading for construction, agriculture, and development projects.' },
-    { icon: '⛏️', title: 'EXCAVATION WORK', desc: 'Deep excavation for foundations, basements, drainage lines, and infrastructure projects.' },
+    { title: 'Earth Excavation', icon: <HardHat className="w-10 h-10" />, desc: 'Deep-scale excavation for large infrastructure projects.' },
+    { title: 'Land Leveling', icon: <ArrowRight className="w-10 h-10" />, desc: 'Precision grading and leveling for seamless construction.' },
+    { title: 'Backhoe Rental', icon: <Award className="w-10 h-10" />, desc: 'Premium JCB & heavy machinery rental on demand.' },
+    { title: 'Site Clearing', icon: <Shield className="w-10 h-10" />, desc: 'Complete removal of debris and obstacles with efficiency.' },
   ];
 
-  const whatsappMsg = encodeURIComponent("Hi! I need Backhoe Loader rental service in Sivagangai. Please share availability.");
-
-  // Animation variants
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15 }
-    }
-  };
-
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 40 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
-  };
-
   return (
-    <div className="min-h-screen bg-matte-black">
-      {/* HERO SECTION */}
+    <div className="bg-premium-black min-h-screen text-white">
+      {/* --- HERO SECTION --- */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Parallax Image */}
+        {/* Cinematic Background */}
         <motion.div 
-          className="absolute inset-0 w-full h-[120%] z-0"
-          style={{ y: y1 }}
+          className="absolute inset-0 z-0"
+          style={{ y: heroY, scale: heroScale }}
         >
           <img
-            src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80"
-            alt="Backhoe Loader Construction"
-            className="w-full h-full object-cover object-center filter contrast-125"
+            src="https://images.unsplash.com/photo-1541888946425-d81bb19480c5?auto=format&fit=crop&w=1920&q=80"
+            alt="Heavy Machinery Cinematic"
+            className="w-full h-full object-cover filter brightness-[0.4] contrast-125"
           />
+          <div className="absolute inset-0 cinematic-overlay" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(10,10,10,0.8)_100%)]" />
         </motion.div>
-        
-        {/* Cinematic Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-matte-black z-0"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-black/40 to-black/90 z-0"></div>
 
-        {/* Industrial Accents */}
-        <div className="absolute left-0 top-0 w-1/3 h-full bg-gradient-to-r from-black to-transparent z-10 pointer-events-none"></div>
-        <div className="absolute right-0 bottom-0 w-1/2 h-2 bg-gradient-to-r from-transparent via-jcb-yellow to-jcb-yellow z-20"></div>
+        {/* Floating Particles/Dust Simulation (CSS handled) */}
+        <div className="absolute inset-0 pointer-events-none z-10 opacity-20">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="ambient-particle"
+              style={{
+                width: Math.random() * 4 + 2 + 'px',
+                height: Math.random() * 4 + 2 + 'px',
+                left: Math.random() * 100 + '%',
+                top: Math.random() * 100 + '%',
+              }}
+              animate={{
+                y: [0, -100, 0],
+                x: [0, Math.random() * 50 - 25, 0],
+                opacity: [0, 1, 0],
+              }}
+              transition={{
+                duration: Math.random() * 5 + 5,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+            />
+          ))}
+        </div>
 
-        <motion.div 
-          className="relative z-20 w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 mt-16 lg:mt-0"
-          variants={staggerContainer}
-          initial="hidden"
-          animate="show"
-        >
-          <div className="max-w-5xl">
-            {/* Badge */}
-            <motion.div variants={fadeInUp} className="inline-flex items-center gap-4 bg-black/40 backdrop-blur-md border-l-4 border-jcb-yellow px-6 py-3 mb-10">
-              <span className="w-2.5 h-2.5 rounded-full bg-jcb-yellow animate-pulse shadow-[0_0_10px_#f2c200]"></span>
-              <span className="text-white text-sm font-montserrat font-bold tracking-[0.2em] uppercase">Premium Earth Moving Enterprise</span>
+        {/* Hero Content */}
+        <div className="container mx-auto px-6 relative z-20 mt-20">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+            className="max-w-6xl"
+          >
+            <motion.div
+              initial={{ x: -100, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="inline-flex items-center gap-4 bg-white/5 backdrop-blur-xl border-l-4 border-industrial-yellow px-6 py-2 mb-8"
+            >
+              <span className="w-2 h-2 rounded-full bg-industrial-yellow animate-pulse" />
+              <span className="font-inter text-xs font-bold uppercase tracking-[0.4em] text-white/80">
+                Premium Industrial Engineering
+              </span>
             </motion.div>
 
-            {/* Heading */}
-            <motion.h1 variants={fadeInUp} className="text-6xl sm:text-7xl lg:text-[8rem] xl:text-[9rem] font-black leading-[0.9] mb-8 font-montserrat tracking-tighter drop-shadow-2xl">
-              <span className="text-white block">SRI BALAJI</span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-jcb-yellow to-[#d4aa00] block drop-shadow-[0_0_40px_rgba(242,194,0,0.3)]">EARTH MOVERS</span>
+            <motion.h1
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-7xl md:text-[9rem] lg:text-[11rem] font-bebas leading-[0.85] tracking-tighter mb-8"
+            >
+              MOVING <span className="text-industrial-yellow text-glow">EARTH.</span><br />
+              BUILDING <span className="text-white">TRUST.</span>
             </motion.h1>
-            
-            {/* Subtitle */}
-            <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row sm:items-center gap-6 mb-14 max-w-3xl">
-              <div className="hidden sm:block h-1 w-20 bg-jcb-yellow"></div>
-              <p className="text-gray-300 text-lg lg:text-2xl font-inter font-light leading-relaxed border-l-4 sm:border-l-0 border-jcb-yellow pl-4 sm:pl-0">
-                Over <strong className="text-white font-bold">20+ years</strong> of delivering reliable, efficient, and heavy-duty construction equipment solutions across Tamil Nadu.
-              </p>
-            </motion.div>
 
-            {/* CTA Buttons */}
-            <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row flex-wrap gap-6 items-start sm:items-center">
-              <Link to="/booking" className="btn-premium px-10 py-5 text-lg w-full sm:w-auto">
-                BOOK EQUIPMENT <ArrowRight size={24} />
+            <motion.p
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="font-inter text-lg md:text-2xl text-gray-muted max-w-2xl mb-12 leading-relaxed"
+            >
+              Premium Earthmoving & Construction Equipment Services in Tamil Nadu. Delivering heavy-duty reliability since 2004.
+            </motion.p>
+
+            <motion.div
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="flex flex-wrap gap-6"
+            >
+              <Link to="/booking" className="btn-cinematic">
+                GET A QUOTE <ArrowRight size={20} />
               </Link>
-              <Link to="/projects" className="btn-outline-premium px-10 py-5 text-lg w-full sm:w-auto border-gray-400 text-gray-200 hover:border-white hover:text-black-matte">
-                VIEW OUR WORK
-              </Link>
-              <a href={`https://wa.me/919443239842?text=${whatsappMsg}`} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-3 text-white font-montserrat font-bold uppercase tracking-widest text-sm hover:text-jcb-yellow transition-colors group mt-4 sm:mt-0 sm:ml-4">
-                <span className="w-12 h-12 rounded-full bg-[#25D366] flex items-center justify-center group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(37,211,102,0.4)]">
-                  <MessageCircle size={20} className="text-white" />
-                </span>
-                WhatsApp Us
+              <a href="tel:+919994289069" className="btn-outline-cinematic">
+                CALL NOW <Phone size={20} />
               </a>
             </motion.div>
-          </div>
-        </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div 
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
-          style={{ opacity }}
-        >
-          <span className="text-white/50 text-xs font-montserrat font-bold uppercase tracking-widest">Scroll to explore</span>
-          <motion.div 
-            animate={{ y: [0, 10, 0] }}
-            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          >
-            <ChevronDown size={32} className="text-jcb-yellow" />
           </motion.div>
+        </div>
+
+        {/* Animated Hero Stats Overlay */}
+        <div className="absolute bottom-20 right-6 md:right-20 z-20 hidden lg:block">
+          <div className="grid grid-cols-1 gap-12 border-l border-white/10 pl-12 py-6 backdrop-blur-sm">
+            <StatItem end={10} label="Years Experience" delay={1} />
+            <StatItem end={100} label="Projects Delivered" delay={1.2} />
+            <StatItem end={4.6} label="Customer Rating" suffix="★" delay={1.4} />
+          </div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <motion.div 
+          style={{ opacity: heroOpacity }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-4"
+        >
+          <span className="font-bebas text-sm tracking-widest text-white/40">Explore Legacy</span>
+          <div className="w-[1px] h-20 bg-gradient-to-b from-industrial-yellow to-transparent" />
         </motion.div>
       </section>
 
-      {/* STATS SECTION */}
-      <section className="relative -mt-16 z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-40">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-          <StatCard end={500} label="Projects Completed" />
-          <StatCard end={20} label="Years Experience" />
-          <StatCard end={150} label="Happy Clients" />
-          <StatCard end={24} label="Hour Service" suffix="/7" />
+      {/* --- ABOUT SECTION (Cinematic Split) --- */}
+      <section className="py-32 relative overflow-hidden">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+            >
+              <h2 className="text-gray-muted text-sm font-bold tracking-[0.4em] uppercase mb-6 flex items-center gap-4">
+                <span className="w-10 h-[2px] bg-industrial-yellow" /> Our Heritage
+              </h2>
+              <h3 className="text-5xl md:text-7xl font-bebas mb-8 leading-tight">
+                DOMINATING THE <br />
+                <span className="text-industrial-yellow">INDUSTRIAL LANDSCAPE</span>
+              </h3>
+              <p className="font-inter text-gray-muted text-lg mb-10 leading-relaxed max-w-xl">
+                Sri Balaji Earth Movers isn't just an equipment rental service; it's a legacy of precision and power. For over a decade, we have been the backbone of Sivaganga's infrastructure, providing unmatched heavy machinery solutions for government and private projects.
+              </p>
+              
+              <div className="grid grid-cols-2 gap-8 mb-12">
+                <div className="border-t border-white/10 pt-6">
+                  <h4 className="font-bebas text-2xl text-white mb-2">PRECISION</h4>
+                  <p className="text-gray-muted text-sm">Laser-accurate grading and leveling.</p>
+                </div>
+                <div className="border-t border-white/10 pt-6">
+                  <h4 className="font-bebas text-2xl text-white mb-2">POWER</h4>
+                  <p className="text-gray-muted text-sm">High-performance heavy machinery.</p>
+                </div>
+              </div>
+
+              <Link to="/services" className="group flex items-center gap-4 font-bebas text-xl tracking-widest text-industrial-yellow hover:text-white transition-colors">
+                DISCOVER OUR STRENGTH <ArrowRight className="group-hover:translate-x-2 transition-transform" />
+              </Link>
+            </motion.div>
+
+            <motion.div 
+              className="relative aspect-video lg:aspect-square group overflow-hidden border border-white/10"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1579412690850-bd41cd0af397?auto=format&fit=crop&w=1200&q=80" 
+                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                alt="About Industrial"
+              />
+              <div className="absolute inset-0 bg-industrial-yellow/10 group-hover:bg-transparent transition-colors duration-500" />
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* SERVICES OVERVIEW */}
-      <section className="py-40 bg-dark-bg relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-dark-border to-transparent"></div>
-        {/* Subtle grid pattern background */}
-        <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '100px 100px' }}></div>
-
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div 
-            className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-24 gap-10"
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={staggerContainer}
-          >
-            <div className="max-w-3xl">
-              <motion.div variants={fadeInUp} className="flex items-center gap-4 mb-6">
-                <div className="h-1 w-12 bg-jcb-yellow"></div>
-                <p className="text-jcb-yellow text-sm font-montserrat font-bold uppercase tracking-[0.3em]">Our Expertise</p>
-              </motion.div>
-              <motion.h2 variants={fadeInUp} className="text-5xl lg:text-7xl font-black font-montserrat text-white tracking-tight uppercase leading-[1.1]">
-                Industrial <span className="text-transparent bg-clip-text bg-gradient-to-r from-jcb-yellow to-[#a68500]">Services</span>
-              </motion.h2>
-            </div>
-            <motion.div variants={fadeInUp}>
-              <Link to="/services" className="flex items-center gap-3 text-white hover:text-jcb-yellow font-montserrat font-bold uppercase tracking-widest text-sm transition-colors group">
-                View All Services 
-                <span className="w-10 h-10 rounded-full border border-current flex items-center justify-center group-hover:bg-jcb-yellow group-hover:text-black-matte transition-all">
-                  <ArrowRight size={16} />
-                </span>
-              </Link>
-            </motion.div>
-          </motion.div>
+      {/* --- SERVICES SECTION (Glow Cards) --- */}
+      <section className="py-32 bg-charcoal relative">
+        <div className="industrial-grid absolute inset-0 opacity-20" />
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="text-center mb-24">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="text-7xl md:text-9xl font-bebas tracking-tighter"
+            >
+              PREMIUM <span className="text-industrial-yellow">SOLUTIONS</span>
+            </motion.h2>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {services.map((s, i) => (
-              <motion.div 
-                key={i} 
-                className="group relative bg-dark-surface border border-dark-border hover:border-jcb-yellow/50 transition-all duration-500 rounded-2xl overflow-hidden p-1"
+            {services.map((service, index) => (
+              <motion.div
+                key={index}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
+                transition={{ delay: index * 0.1 }}
+                className="group relative bg-premium-black p-12 border border-white/5 hover:border-industrial-yellow/50 transition-all duration-500 hover:-translate-y-4"
               >
-                <div className="bg-matte-black w-full h-full rounded-xl p-10 relative z-10 flex flex-col justify-between min-h-[400px]">
-                  <div>
-                    <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity font-black text-8xl text-white">0{i+1}</div>
-                    <div className="text-5xl mb-10 w-20 h-20 flex items-center justify-center bg-dark-surface rounded-xl border border-dark-border group-hover:border-jcb-yellow group-hover:bg-jcb-yellow/10 transition-colors shadow-xl">
-                      {s.icon}
-                    </div>
-                    <h3 className="text-white font-montserrat font-black text-2xl tracking-wide mb-6 uppercase leading-snug group-hover:text-jcb-yellow transition-colors">{s.title}</h3>
-                    <p className="text-gray-text text-base leading-relaxed font-inter">{s.desc}</p>
+                <div className="absolute top-0 left-0 w-full h-[2px] bg-industrial-yellow scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                <div className="text-industrial-yellow mb-8 group-hover:scale-110 transition-transform duration-500">
+                  {service.icon}
+                </div>
+                <h3 className="text-3xl font-bebas mb-4 group-hover:text-industrial-yellow transition-colors">
+                  {service.title}
+                </h3>
+                <p className="text-gray-muted font-inter leading-relaxed mb-8">
+                  {service.desc}
+                </p>
+                <span className="text-white/20 font-bebas text-6xl absolute bottom-8 right-8">
+                  0{index + 1}
+                </span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* --- MACHINERY SHOWCASE (Interactive Experience) --- */}
+      <section className="py-32 bg-premium-black">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+            <div className="max-w-2xl">
+              <h2 className="text-5xl md:text-8xl font-bebas leading-none">
+                THE <span className="text-industrial-yellow">FLEET</span>
+              </h2>
+              <p className="text-gray-muted font-inter mt-6">
+                Explore our world-class inventory of heavy-duty machinery. Every unit is maintained to Caterpillar® Tier 1 standards.
+              </p>
+            </div>
+            <Link to="/booking" className="btn-outline-cinematic border-industrial-yellow text-industrial-yellow hover:bg-industrial-yellow hover:text-black">
+              BOOK EQUIPMENT
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {[
+              { 
+                name: 'JCB 3DX Xtra', 
+                type: 'Backhoe Loader', 
+                img: 'https://images.unsplash.com/photo-1590496793929-36417d3117de?auto=format&fit=crop&w=1200&q=80',
+                specs: ['Heavy-duty Digging', 'Advanced Hydraulics']
+              },
+              { 
+                name: 'Caterpillar D8', 
+                type: 'Track-Type Tractor', 
+                img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80',
+                specs: ['Desert Optimized', '1000HP Performance']
+              }
+            ].map((machine, idx) => (
+              <motion.div 
+                key={idx}
+                whileHover={{ scale: 0.98 }}
+                className="relative h-[600px] overflow-hidden group border border-white/5"
+              >
+                <img src={machine.img} className="w-full h-full object-cover filter contrast-125 brightness-[0.6] group-hover:scale-110 transition-transform duration-1000" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
+                
+                <div className="absolute bottom-12 left-12 right-12">
+                  <span className="text-industrial-yellow font-bebas text-xl tracking-[0.2em] mb-4 block">
+                    {machine.type}
+                  </span>
+                  <h4 className="text-5xl md:text-6xl font-bebas mb-6">
+                    {machine.name}
+                  </h4>
+                  <div className="flex gap-4">
+                    {machine.specs.map((spec, sIdx) => (
+                      <span key={sIdx} className="px-4 py-2 bg-white/10 backdrop-blur-md font-inter text-[10px] uppercase tracking-widest font-bold">
+                        {spec}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </motion.div>
@@ -226,121 +341,87 @@ const Home = () => {
         </div>
       </section>
 
-      {/* WHY CHOOSE US */}
-      <section className="py-32 bg-matte-black relative overflow-hidden">
-        {/* Background Industrial Pattern */}
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-            <motion.div
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              variants={staggerContainer}
-            >
-              <motion.p variants={fadeInUp} className="text-jcb-yellow text-sm font-montserrat font-bold uppercase tracking-[0.3em] mb-4">Why Choose Us</motion.p>
-              <motion.h2 variants={fadeInUp} className="text-4xl lg:text-6xl font-black font-montserrat text-white mb-8 leading-[1.1] tracking-tight uppercase">
-                The Standard In <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-jcb-yellow to-[#a68500]">Earth Moving</span>
-              </motion.h2>
-              <motion.p variants={fadeInUp} className="text-gray-text text-lg leading-relaxed mb-10 font-inter">
-                With over a decade of experience in earth moving and construction equipment rental, 
-                Sri Balaji Earth Movers delivers reliable, efficient, and professional backhoe loader services 
-                that meet the highest industry standards.
-              </motion.p>
-              
-              <ul className="space-y-8 mb-14">
-                {[
-                  { icon: <Shield size={24} />, text: 'FULLY INSURED & CERTIFIED OPERATORS' },
-                  { icon: <Clock size={24} />, text: '24/7 AVAILABILITY & ON-CALL SERVICE' },
-                  { icon: <CheckCircle size={24} />, text: 'WELL-MAINTAINED MODERN MACHINERY' },
-                  { icon: <Star size={24} />, text: 'COMPETITIVE PRICING, NO HIDDEN CHARGES' },
-                ].map((item, i) => (
-                  <motion.li key={i} variants={fadeInUp} className="flex items-center gap-5 text-white font-montserrat font-bold tracking-wide text-sm sm:text-base">
-                    <div className="flex-shrink-0 w-14 h-14 bg-dark-surface rounded-md flex items-center justify-center text-jcb-yellow border border-dark-border shadow-sm">
-                      {item.icon}
-                    </div>
-                    {item.text}
-                  </motion.li>
-                ))}
-              </ul>
+      {/* --- TESTIMONIALS (Glass Marquee) --- */}
+      <section className="py-32 bg-charcoal overflow-hidden">
+        <div className="container mx-auto px-6 mb-20">
+          <div className="text-center">
+            <h2 className="text-4xl font-bebas tracking-[0.4em] mb-4">CLIENT VOICES</h2>
+            <div className="flex justify-center items-center gap-2 text-industrial-yellow mb-2">
+              {[...Array(5)].map((_, i) => <Star key={i} fill="currentColor" size={24} />)}
+            </div>
+            <p className="text-gray-muted font-bebas text-2xl tracking-widest uppercase">4.6 Google Rating</p>
+          </div>
+        </div>
 
-              <motion.div variants={fadeInUp} className="flex flex-wrap gap-6">
-                <Link to="/booking" className="btn-premium text-sm sm:text-base">
-                  Book Now
-                </Link>
-                <Link to="/projects" className="btn-outline-premium text-sm sm:text-base">
-                  View Projects
-                </Link>
-              </motion.div>
-            </motion.div>
-
-            {/* Image */}
-            <motion.div 
-              className="relative"
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            >
-              <div className="absolute -inset-4 bg-jcb-yellow/20 rounded blur-2xl z-0"></div>
-              <div className="relative z-10 border border-dark-border rounded overflow-hidden shadow-2xl">
-                <img
-                  src="https://images.unsplash.com/photo-1590496793929-36417d3117de?w=800&q=80"
-                  alt="JCB Backhoe Loader at work"
-                  className="w-full object-cover transform hover:scale-105 transition-transform duration-700"
-                />
+        <div className="marquee-container">
+          <div className="marquee-content flex gap-8">
+            {[
+              "BEST SERVICE IN TAMIL NADU",
+              "PROFESSIONAL & RESPONSIVE",
+              "HEAVY-DUTY RELIABILITY",
+              "HIGH WORK SATISFACTION",
+              "EXCELLENT OPERATORS",
+              "STATE-OF-THE-ART FLEET"
+            ].map((text, i) => (
+              <div key={i} className="glass-morphism px-16 py-12 min-w-[400px]">
+                <p className="text-2xl font-bebas tracking-wider mb-6 italic">"{text}"</p>
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-industrial-yellow/20 flex items-center justify-center text-industrial-yellow font-bold">
+                    {text[0]}
+                  </div>
+                  <span className="font-inter text-xs font-bold tracking-widest text-gray-muted uppercase">Verified Industrial Client</span>
+                </div>
               </div>
-              {/* Badge overlay */}
-              <div className="absolute -bottom-10 -left-10 bg-jcb-yellow text-matte-black p-8 rounded shadow-2xl z-20 hidden md:block">
-                <div className="font-montserrat font-black text-5xl mb-1">20+</div>
-                <div className="text-sm font-montserrat font-bold uppercase tracking-widest">Years Of Excellence</div>
+            ))}
+            {/* Duplicate for seamless loop */}
+            {[
+              "BEST SERVICE IN TAMIL NADU",
+              "PROFESSIONAL & RESPONSIVE",
+              "HEAVY-DUTY RELIABILITY",
+              "HIGH WORK SATISFACTION",
+              "EXCELLENT OPERATORS",
+              "STATE-OF-THE-ART FLEET"
+            ].map((text, i) => (
+              <div key={i + 10} className="glass-morphism px-16 py-12 min-w-[400px]">
+                <p className="text-2xl font-bebas tracking-wider mb-6 italic">"{text}"</p>
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-industrial-yellow/20 flex items-center justify-center text-industrial-yellow font-bold">
+                    {text[0]}
+                  </div>
+                  <span className="font-inter text-xs font-bold tracking-widest text-gray-muted uppercase">Verified Industrial Client</span>
+                </div>
               </div>
-            </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* CTA BANNER */}
-      <section className="py-24 bg-jcb-yellow relative overflow-hidden">
-        {/* Industrial Stripes Background */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #000 0, #000 2px, transparent 0, transparent 20px)' }}></div>
+      {/* --- CTA SECTION --- */}
+      <section className="py-40 relative">
+        <div className="absolute inset-0 z-0">
+          <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1920&q=80" className="w-full h-full object-cover filter brightness-[0.2] grayscale" />
+          <div className="absolute inset-0 bg-gradient-to-b from-premium-black to-transparent" />
         </div>
         
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-          <motion.h2 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+        <div className="container mx-auto px-6 relative z-10 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="text-4xl lg:text-6xl font-black font-montserrat text-matte-black mb-8 uppercase tracking-tight leading-[1.2]"
+            className="max-w-4xl mx-auto"
           >
-            Ready To Start Your Project?
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-matte-black/80 text-xl mb-10 font-inter font-medium max-w-2xl mx-auto"
-          >
-            Contact us today for quick availability & competitive quotes. We serve Sivagangai and all surrounding areas.
-          </motion.p>
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="flex flex-wrap justify-center gap-6"
-          >
-            <a href="tel:+919443239842"
-              className="bg-matte-black text-jcb-yellow font-montserrat font-bold uppercase tracking-widest px-8 py-4 rounded-md flex items-center gap-3 transition-all duration-400 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_10px_25px_rgba(0,0,0,0.3)] shadow-xl">
-              <Phone size={20} /> Call Now
-            </a>
-            <a href={`https://wa.me/919443239842?text=${whatsappMsg}`} target="_blank" rel="noopener noreferrer"
-              className="bg-matte-black text-white font-montserrat font-bold uppercase tracking-widest px-8 py-4 rounded-md flex items-center gap-3 transition-all duration-400 hover:bg-[#25D366] hover:text-white hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_10px_25px_rgba(37,211,102,0.4)] shadow-xl border border-matte-black">
-              <MessageCircle size={20} /> WhatsApp
-            </a>
+            <h2 className="text-6xl md:text-9xl font-bebas leading-[0.9] mb-12">
+              START YOUR <br />
+              <span className="text-industrial-yellow">NEXT PROJECT</span> TODAY
+            </h2>
+            <div className="flex flex-wrap justify-center gap-8">
+              <Link to="/booking" className="btn-cinematic px-16">
+                GET A QUOTE
+              </Link>
+              <a href={`https://wa.me/919994289069?text=${whatsappMsg}`} className="btn-outline-cinematic border-white text-white hover:bg-white hover:text-black">
+                WHATSAPP US
+              </a>
+            </div>
           </motion.div>
         </div>
       </section>

@@ -1,206 +1,167 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, CheckCircle, Shield, Cog, Phone } from 'lucide-react';
+import { ArrowRight, CheckCircle, Shield, Cog, Phone, HardHat, Construction, Truck, Settings } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const services = [
   {
-    icon: '🚜',
-    title: 'BACKHOE LOADER RENTAL',
-    description: 'Rent our powerful JCB backhoe loaders for daily, weekly, or monthly periods. Suitable for excavation, loading, digging, and material handling tasks across construction and infrastructure projects.',
-    features: ['Daily / Weekly / Monthly rental', 'Experienced operators available', 'Quick deployment', 'All project sizes welcome'],
-    delay: 0.1,
+    icon: <HardHat className="w-12 h-12" />,
+    title: 'Earth Excavation',
+    description: 'Deep-scale excavation for large infrastructure projects. Foundations, basements, and complex drainage systems.',
+    features: ['Foundation digging', 'Basement excavation', 'Infrastructure support', 'Precision depth control'],
   },
   {
-    icon: '🌿',
-    title: 'SITE CLEARING',
-    description: 'Professional site clearing services to prepare your land for construction. We remove trees, vegetation, debris, old structures, and surface obstacles efficiently, leaving a clean, ready-to-build site.',
-    features: ['Complete debris removal', 'Tree & vegetation clearing', 'Surface preparation', 'Debris disposal assistance'],
-    delay: 0.2,
+    icon: <Construction className="w-12 h-12" />,
+    title: 'Land Leveling',
+    description: 'Precision grading and leveling for seamless construction. We ensure stable, perfectly flat surfaces for any project.',
+    features: ['Agricultural grading', 'Site preparation', 'Drainage improvement', 'Slope correction'],
   },
   {
-    icon: '📐',
-    title: 'LAND LEVELING',
-    description: 'Precise land leveling and grading services for construction, agriculture, and real estate development. We ensure perfectly flat, stable surfaces ready for building or cultivation.',
-    features: ['Agricultural land leveling', 'Construction site grading', 'Slope correction', 'Drainage improvement'],
-    delay: 0.3,
+    icon: <Truck className="w-12 h-12" />,
+    title: 'Backhoe Rental',
+    description: 'Premium JCB & heavy machinery rental on demand. Powerful, well-maintained units with certified operators.',
+    features: ['Flexible rental periods', 'Certified operators', 'Caterpillar standards', 'Quick deployment'],
   },
   {
-    icon: '⛏️',
-    title: 'EXCAVATION WORK',
-    description: 'Deep and precise excavation for foundations, basements, trenches, drainage systems, and infrastructure. Our skilled operators ensure accuracy, safety, and speed on every project.',
-    features: ['Foundation excavation', 'Drainage & pipeline trenches', 'Basement digging', 'Road & infrastructure work'],
-    delay: 0.4,
+    icon: <Shield className="w-12 h-12" />,
+    title: 'Site Clearing',
+    description: 'Complete removal of debris, vegetation, and obstacles. Transforming raw land into a construction-ready site.',
+    features: ['Tree removal', 'Debris disposal', 'Surface preparation', 'Complete clearing'],
+  },
+  {
+    icon: <Settings className="w-12 h-12" />,
+    title: 'Road Preparation',
+    description: 'Industrial-grade road base preparation. Grading, sub-base compaction, and surface finishing.',
+    features: ['Sub-base grading', 'Material movement', 'Compaction support', 'Edge finishing'],
+  },
+  {
+    icon: <Cog className="w-12 h-12" />,
+    title: 'Construction Support',
+    description: 'On-site machinery support for large-scale development. Material handling and utility trenching.',
+    features: ['Utility trenching', 'Material lifting', '24/7 site support', 'Project coordination'],
   },
 ];
 
 const Services = () => {
-  const whatsappMsg = encodeURIComponent("Hi! I'm interested in your services. Please provide more details and pricing.");
-
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 40 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { staggerChildren: 0.15 } }
-  };
+  const whatsappMsg = encodeURIComponent("Hi! I'm interested in your earthmoving services. Please share your equipment list and pricing.");
 
   return (
-    <div className="min-h-screen bg-matte-black pt-20">
-      {/* Hero */}
-      <section className="py-24 bg-dark-bg relative overflow-hidden">
-        {/* Background Industrial Pattern */}
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
-        <div className="absolute left-0 bottom-0 w-full h-px bg-gradient-to-r from-transparent via-jcb-yellow/50 to-transparent"></div>
-
-        <motion.div
-          className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10"
-          initial="hidden"
-          animate="show"
-          variants={staggerContainer}
-        >
-          <motion.div variants={fadeInUp} className="flex items-center justify-center gap-4 mb-4">
-            <div className="h-px w-12 bg-jcb-yellow"></div>
-            <p className="text-jcb-yellow text-sm font-montserrat font-bold uppercase tracking-[0.3em]">What We Offer</p>
-            <div className="h-px w-12 bg-jcb-yellow"></div>
+    <div className="bg-premium-black min-h-screen pt-32 pb-24">
+      {/* Header */}
+      <section className="relative py-24 overflow-hidden mb-12">
+        <div className="industrial-grid absolute inset-0 opacity-10 pointer-events-none" />
+        <div className="container mx-auto px-6 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-4xl"
+          >
+            <h1 className="text-7xl md:text-9xl font-bebas leading-[0.85] tracking-tighter mb-8">
+              OUR <span className="text-industrial-yellow">EXPERTISE</span>
+            </h1>
+            <p className="font-inter text-xl text-gray-muted max-w-2xl leading-relaxed">
+              Powering Sivaganga's infrastructure with precision-engineered earthmoving solutions and world-class machinery.
+            </p>
           </motion.div>
-          <motion.h1 variants={fadeInUp} className="text-5xl lg:text-7xl font-black font-montserrat text-white mb-6 uppercase tracking-tight">
-            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-jcb-yellow to-[#a68500]">Services</span>
-          </motion.h1>
-          <motion.p variants={fadeInUp} className="text-gray-text text-lg leading-relaxed font-inter">
-            Comprehensive backhoe loader and earth-moving services for construction, agriculture,
-            and infrastructure projects across Sivagangai, Tamil Nadu.
-          </motion.p>
-        </motion.div>
+        </div>
       </section>
 
       {/* Services Grid */}
-      <section className="py-24 bg-matte-black relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-            {services.map((service, i) => (
-              <motion.div
-                key={i}
-                className="card-premium p-10 rounded-xl relative group overflow-hidden flex flex-col justify-between"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: service.delay }}
-              >
-                <div className="flex-1">
-                <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
-                  <Cog size={120} className="text-white transform group-hover:rotate-90 transition-transform duration-1000" />
+      <section className="container mx-auto px-6 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {services.map((service, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="group bg-charcoal p-12 border border-white/5 hover:border-industrial-yellow/50 transition-all duration-500 hover:-translate-y-4 flex flex-col justify-between h-full"
+            >
+              <div>
+                <div className="text-industrial-yellow mb-10 group-hover:scale-110 transition-transform duration-500">
+                  {service.icon}
                 </div>
-
-                <div className="text-5xl mb-8 relative z-10 bg-dark-bg w-20 h-20 flex items-center justify-center rounded border border-dark-border group-hover:border-jcb-yellow transition-colors">{service.icon}</div>
-                <h2 className="text-2xl font-black font-montserrat text-white mb-4 uppercase tracking-wide group-hover:text-jcb-yellow transition-colors relative z-10">{service.title}</h2>
-                <p className="text-gray-text leading-relaxed mb-8 font-inter relative z-10">{service.description}</p>
-
-                <div className="h-px w-full bg-dark-border mb-8"></div>
-
-                <ul className="space-y-4 mb-10 relative z-10">
-                  {service.features.map((f, j) => (
-                    <li key={j} className="flex items-center gap-4 text-white font-montserrat font-bold tracking-wide text-sm">
-                      <div className="w-6 h-6 rounded bg-dark-surface border border-dark-border flex items-center justify-center">
-                        <CheckCircle size={14} className="text-jcb-yellow flex-shrink-0" />
-                      </div>
-                      {f}
+                <h2 className="text-4xl font-bebas mb-6 group-hover:text-industrial-yellow transition-colors tracking-wide">
+                  {service.title}
+                </h2>
+                <p className="text-gray-muted font-inter leading-relaxed mb-10 text-sm">
+                  {service.description}
+                </p>
+                
+                <ul className="space-y-4 mb-12">
+                  {service.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-center gap-3 font-bebas text-lg tracking-wider text-white/80">
+                      <CheckCircle size={16} className="text-industrial-yellow" />
+                      {feature}
                     </li>
                   ))}
                 </ul>
-                </div>
-                <Link to="/booking" className="btn-outline-premium w-full relative z-10 group-hover:bg-jcb-yellow group-hover:text-black-matte group-hover:border-jcb-yellow mt-auto">
-                  BOOK THIS SERVICE
-                </Link>
-              </motion.div>
-            ))}
-          </div>
+              </div>
+
+              <Link to="/booking" className="btn-cinematic !w-full justify-center">
+                INQUIRE NOW
+              </Link>
+            </motion.div>
+          ))}
         </div>
       </section>
 
       {/* Process Section */}
-      <section className="py-24 bg-dark-bg relative border-t border-dark-border">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-20"
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-          >
-            <motion.p variants={fadeInUp} className="text-jcb-yellow text-sm font-montserrat font-bold uppercase tracking-[0.3em] mb-4">How It Works</motion.p>
-            <motion.h2 variants={fadeInUp} className="text-4xl lg:text-5xl font-black font-montserrat text-white uppercase tracking-tight">Simple <span className="text-transparent bg-clip-text bg-gradient-to-r from-jcb-yellow to-[#a68500]">3-Step Process</span></motion.h2>
-          </motion.div>
+      <section className="py-40 relative">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-24">
+            <h2 className="text-gray-muted text-xs font-bold tracking-[0.5em] uppercase mb-4">The Methodology</h2>
+            <h3 className="text-6xl md:text-8xl font-bebas tracking-tighter">
+              PRECISION <span className="text-industrial-yellow">PROCESS</span>
+            </h3>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
-            <div className="hidden md:block absolute top-12 left-[16.6%] w-[66%] h-px bg-dark-border border-dashed z-0"></div>
-
+            {/* Connecting Line (Desktop) */}
+            <div className="hidden md:block absolute top-1/2 left-[10%] right-[10%] h-[1px] bg-white/5 -translate-y-1/2 z-0" />
+            
             {[
-              { step: '01', title: 'CONTACT US', desc: 'Call or WhatsApp us with your project details — location, work type, and timeline.' },
-              { step: '02', title: 'GET A QUOTE', desc: 'We visit your site (or assess remotely) and provide a transparent, competitive quote.' },
-              { step: '03', title: 'WORK BEGINS', desc: 'Our experienced team arrives with the right machinery and completes your project on time.' },
+              { step: '01', title: 'Intelligence', desc: 'Detailed site analysis and requirement gathering for precise estimation.' },
+              { step: '02', title: 'Deployment', desc: 'Swift mobilization of Tier 1 machinery and certified operators to the site.' },
+              { step: '03', title: 'Execution', desc: 'Precision-led construction support with constant project monitoring.' },
             ].map((item, i) => (
               <motion.div
                 key={i}
-                className="text-center relative z-10"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.2 }}
+                transition={{ delay: i * 0.2 }}
+                className="relative z-10 bg-premium-black border border-white/5 p-12 text-center group hover:border-industrial-yellow transition-all duration-500"
               >
-                <div className="relative w-24 h-24 bg-dark-surface rounded flex items-center justify-center text-jcb-yellow font-montserrat font-black text-3xl mx-auto mb-8 border border-dark-border shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+                <div className="font-bebas text-7xl text-white/5 mb-8 group-hover:text-industrial-yellow/10 transition-colors">
                   {item.step}
-                  <div className="absolute inset-0 bg-jcb-yellow/5 rounded"></div>
                 </div>
-                <h3 className="text-white font-montserrat font-black text-xl tracking-wide mb-4 uppercase">{item.title}</h3>
-                <p className="text-gray-text text-base leading-relaxed font-inter px-4">{item.desc}</p>
+                <h4 className="text-3xl font-bebas mb-4 tracking-widest">{item.title}</h4>
+                <p className="text-gray-muted font-inter text-sm leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24 bg-jcb-yellow relative overflow-hidden">
-        {/* Industrial Stripes Background */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #000 0, #000 2px, transparent 0, transparent 20px)' }}></div>
-        </div>
-
-        <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl lg:text-6xl font-black font-montserrat text-matte-black mb-8 uppercase tracking-tight leading-[1.2]"
-          >
-            Ready To Get Started?
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-matte-black/80 font-inter font-medium text-xl mb-12"
-          >
-            Contact us today for a free site assessment and quote.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="flex flex-wrap justify-center gap-6"
-          >
-            <Link to="/booking" className="bg-matte-black text-jcb-yellow font-montserrat font-bold uppercase tracking-widest px-8 py-4 rounded-md flex items-center gap-3 transition-all duration-400 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_10px_25px_rgba(0,0,0,0.3)] shadow-xl">
-              Book Now <ArrowRight size={20} />
-            </Link>
-            <a href="tel:+919443239842" className="border-2 border-matte-black text-matte-black hover:bg-matte-black hover:text-jcb-yellow font-montserrat font-bold uppercase tracking-widest px-8 py-4 rounded-md transition-all duration-400 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_10px_25px_rgba(0,0,0,0.3)] shadow-xl flex items-center gap-3">
-              <Phone size={20} /> Call Now
-            </a>
-          </motion.div>
+      {/* Final CTA */}
+      <section className="py-24 container mx-auto px-6">
+        <div className="bg-industrial-yellow p-16 md:p-24 text-black text-center relative overflow-hidden group">
+          <div className="industrial-grid absolute inset-0 opacity-10 group-hover:scale-110 transition-transform duration-[20s]" />
+          <div className="relative z-10 max-w-4xl mx-auto">
+            <h2 className="text-5xl md:text-8xl font-bebas leading-none mb-12">
+              NEED INDUSTRIAL <br /> POWER ON SITE?
+            </h2>
+            <div className="flex flex-wrap justify-center gap-8">
+              <a href="tel:+919994289069" className="btn-cinematic !bg-black !text-white hover:!bg-white hover:!text-black transition-all">
+                CALL EXPERTS <Phone size={20} />
+              </a>
+              <a href={`https://wa.me/919994289069?text=${whatsappMsg}`} className="btn-outline-cinematic !border-black !text-black hover:!bg-black hover:!text-white transition-all">
+                WHATSAPP US <MessageCircle size={20} />
+              </a>
+            </div>
+          </div>
         </div>
       </section>
     </div>

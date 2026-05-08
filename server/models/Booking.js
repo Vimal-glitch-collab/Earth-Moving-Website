@@ -19,7 +19,7 @@ const bookingSchema = new mongoose.Schema({
   workType: {
     type: String,
     required: [true, 'Work type is required'],
-    enum: ['Backhoe Loader Rental', 'Site Clearing', 'Land Leveling', 'Excavation Work', 'Other']
+    enum: ['Backhoe Loader Rental', 'Site Clearing', 'Land Leveling', 'Excavation Work', 'Road Preparation', 'Other']
   },
   date: {
     type: Date,

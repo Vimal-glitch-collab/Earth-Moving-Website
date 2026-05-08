@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Menu, X, Phone } from 'lucide-react';
+import { Menu, X, Phone, Hexagon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
@@ -16,7 +16,12 @@ const Navbar = () => {
 
   useEffect(() => {
     setMenuOpen(false);
-  }, [location]);
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [location, menuOpen]);
 
   const navLinks = [
     { to: '/', label: 'Home' },
@@ -27,30 +32,33 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'navbar-glass py-2' : 'bg-gradient-to-b from-black/80 to-transparent py-4'}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+    <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-700 ${scrolled ? 'glass-morphism py-2' : 'bg-transparent py-6'}`}>
+      <div className="container mx-auto px-6">
+        <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-4 group">
-            <div className="w-12 h-12 bg-jcb-yellow rounded flex items-center justify-center font-montserrat font-black text-black-matte text-xl group-hover:scale-105 transition-transform shadow-[0_0_15px_rgba(242,194,0,0.4)]">
-              SB
+          <Link to="/" className="flex items-center gap-4 group relative z-50">
+            <div className="relative">
+              <Hexagon className="w-12 h-12 text-industrial-yellow fill-industrial-yellow/10 group-hover:rotate-90 transition-transform duration-700" />
+              <span className="absolute inset-0 flex items-center justify-center font-bebas text-2xl text-white font-bold group-hover:scale-110 transition-transform">
+                SB
+              </span>
             </div>
-            <div className="hidden sm:block">
-              <div className="text-white font-montserrat font-black text-base tracking-tighter uppercase leading-none">SRI BALAJI</div>
-              <div className="text-jcb-yellow font-montserrat text-[10px] font-bold tracking-[0.25em] uppercase leading-none mt-1.5">EARTH MOVERS</div>
+            <div className="flex flex-col">
+              <span className="font-bebas text-2xl tracking-widest text-white leading-none">SRI BALAJI</span>
+              <span className="font-inter text-[8px] font-black tracking-[0.4em] text-industrial-yellow uppercase leading-none mt-1">EARTH MOVERS</span>
             </div>
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-2">
+          <div className="hidden lg:flex items-center gap-1">
             {navLinks.map(link => (
               <NavLink
                 key={link.to}
                 to={link.to}
                 end={link.to === '/'}
                 className={({ isActive }) =>
-                  `px-5 py-2.5 rounded text-sm font-montserrat font-bold tracking-wide uppercase transition-all duration-300 relative overflow-hidden group ${
-                    isActive ? 'text-jcb-yellow' : 'text-gray-text hover:text-white'
+                  `px-6 py-2 font-bebas text-xl tracking-[0.1em] uppercase transition-all duration-300 relative group overflow-hidden ${
+                    isActive ? 'text-industrial-yellow' : 'text-white/60 hover:text-white'
                   }`
                 }
               >
@@ -58,65 +66,92 @@ const Navbar = () => {
                   <>
                     <span className="relative z-10">{link.label}</span>
                     {isActive && (
-                      <motion.div layoutId="navbar-indicator" className="absolute bottom-0 left-0 right-0 h-0.5 bg-jcb-yellow" />
+                      <motion.div 
+                        layoutId="nav-active" 
+                        className="absolute bottom-0 left-6 right-6 h-[2px] bg-industrial-yellow" 
+                      />
                     )}
-                    <div className="absolute inset-0 bg-white/5 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
+                    <div className="absolute inset-0 bg-white/5 -translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
                   </>
                 )}
               </NavLink>
             ))}
           </div>
 
-          {/* Right Side */}
-          <div className="hidden lg:flex items-center gap-6">
-            <a href="tel:+919443239842" className="flex items-center gap-2 text-sm font-montserrat font-semibold text-gray-text hover:text-jcb-yellow transition-colors group">
-              <div className="p-2 bg-dark-surface rounded-full group-hover:bg-jcb-yellow/10 transition-colors">
-                <Phone size={16} className="text-jcb-yellow" />
+          {/* Right Side CTA */}
+          <div className="hidden lg:flex items-center gap-8">
+            <a href="tel:+919994289069" className="flex items-center gap-3 group">
+              <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center group-hover:border-industrial-yellow transition-colors">
+                <Phone size={18} className="text-industrial-yellow" />
               </div>
-              <span className="tracking-wider">+91 94432 39842</span>
+              <div className="flex flex-col">
+                <span className="text-[10px] font-bold text-white/40 tracking-widest uppercase">Support Line</span>
+                <span className="font-bebas text-lg text-white tracking-wider">+91 99942 89069</span>
+              </div>
             </a>
-            <Link to="/booking" className="btn-premium text-sm shadow-lg">
-              Book Now
+            <Link to="/booking" className="btn-cinematic !px-6 !py-3 !text-lg">
+              INQUIRY
             </Link>
           </div>
 
-          {/* Mobile menu button */}
-          <button className="lg:hidden p-2 text-white hover:text-jcb-yellow transition-colors" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
-            {menuOpen ? <X size={28} /> : <Menu size={28} />}
+          {/* Mobile Menu Button */}
+          <button 
+            className="lg:hidden relative z-50 p-2 text-white" 
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {menuOpen ? <X size={32} /> : <Menu size={32} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile Navigation Overlay */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-matte-black/95 backdrop-blur-xl border-t border-dark-border overflow-hidden"
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="fixed inset-0 bg-premium-black z-40 lg:hidden flex flex-col justify-center items-center gap-8"
           >
-            <div className="px-4 py-6 space-y-2">
-              {navLinks.map(link => (
+            <div className="industrial-grid absolute inset-0 opacity-10" />
+            
+            {navLinks.map((link, i) => (
+              <motion.div
+                key={link.to}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+              >
                 <NavLink
-                  key={link.to}
                   to={link.to}
-                  end={link.to === '/'}
                   className={({ isActive }) =>
-                    `block px-6 py-4 rounded text-sm font-montserrat font-bold tracking-wider uppercase transition-all ${
-                      isActive ? 'text-black-matte bg-jcb-yellow' : 'text-gray-text hover:text-white hover:bg-dark-surface'
+                    `text-5xl md:text-7xl font-bebas tracking-tighter transition-all ${
+                      isActive ? 'text-industrial-yellow' : 'text-white/40 hover:text-white'
                     }`
                   }
+                  onClick={() => setMenuOpen(false)}
                 >
                   {link.label}
                 </NavLink>
-              ))}
-              <div className="pt-6 mt-4 border-t border-dark-border">
-                <a href="tel:+919443239842" className="flex items-center gap-3 px-6 py-4 bg-dark-surface rounded text-jcb-yellow text-sm font-montserrat font-bold">
-                  <Phone size={18} /> Call +91 94432 39842
-                </a>
+              </motion.div>
+            ))}
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="mt-12 flex flex-col items-center gap-6"
+            >
+              <a href="tel:+919994289069" className="text-2xl font-bebas tracking-widest text-industrial-yellow">
+                +91 99942 89069
+              </a>
+              <div className="flex gap-4">
+                <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center">
+                  <Phone size={24} className="text-white" />
+                </div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

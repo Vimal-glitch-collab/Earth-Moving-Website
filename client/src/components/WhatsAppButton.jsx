@@ -2,21 +2,20 @@ import React from 'react';
 import { MessageCircle } from 'lucide-react';
 
 const WhatsAppButton = () => {
-  const message = encodeURIComponent("Hi! I need Backhoe Loader (JCB) rental service. Please share availability and rates.");
-  const url = `https://wa.me/919443239842?text=${message}`;
+  const message = encodeURIComponent("Hello Sri Balaji Earth Movers, I need earthmoving service.");
+  const url = `https://wa.me/919994289069?text=${message}`;
 
   return (
     <a
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] hover:bg-[#128C7E] rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-110 group"
+      className="fixed bottom-10 right-10 z-[90] w-16 h-16 bg-industrial-yellow text-black flex items-center justify-center shadow-[0_0_30px_rgba(244,180,0,0.3)] transition-all duration-500 hover:scale-110 hover:rotate-12 group"
       aria-label="Chat on WhatsApp"
-      title="Book via WhatsApp"
     >
-      <MessageCircle size={28} className="text-white" />
-      <span className="absolute right-16 bg-zinc-800 text-white text-xs px-3 py-1.5 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-lg border border-zinc-700">
-        Book on WhatsApp
+      <MessageCircle size={32} />
+      <span className="absolute right-20 bg-premium-black text-white text-[10px] font-bold tracking-[0.3em] uppercase px-6 py-3 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-500 border border-white/5 pointer-events-none -translate-x-4 group-hover:translate-x-0">
+        LOGISTIC COMMS
       </span>
     </a>
   );

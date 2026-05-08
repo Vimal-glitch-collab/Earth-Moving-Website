@@ -7,6 +7,9 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
+import CustomCursor from './components/CustomCursor';
+import SmoothScroll from './components/SmoothScroll';
+import ScrollProgress from './components/ScrollProgress';
 
 // Pages
 import Home from './pages/Home';
@@ -49,8 +52,11 @@ const Layout = ({ children }) => {
   return (
     <>
       <ScrollToTop />
+      <SmoothScroll />
+      <CustomCursor />
+      <ScrollProgress />
       {!isAdminPage && <Navbar />}
-      <main>{children}</main>
+      <main className="relative z-10">{children}</main>
       {!isAdminPage && <Footer />}
       {!isAdminPage && <WhatsAppButton />}
     </>
@@ -87,14 +93,18 @@ function App() {
         position="bottom-center"
         toastOptions={{
           style: {
-            background: '#18181b',
+            background: '#0F0F0F',
             color: '#fff',
-            border: '1px solid #3f3f46',
-            borderRadius: '12px',
+            border: '1px solid rgba(255, 255, 255, 0.05)',
+            borderRadius: '0px',
+            fontFamily: 'Inter, sans-serif',
+            fontSize: '14px',
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
           },
           success: {
             iconTheme: {
-              primary: '#eab308',
+              primary: '#F4B400',
               secondary: '#000',
             },
           },

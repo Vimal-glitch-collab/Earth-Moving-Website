@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
-import { Calendar, Clock, MapPin, User, Phone, CheckCircle, ArrowRight, Loader2 } from 'lucide-react';
+import { Calendar, Clock, MapPin, User, Phone, CheckCircle, ArrowRight, Loader2, MessageSquare, Info } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const API_URL = import.meta.env.VITE_API_URL || '';
@@ -11,6 +11,7 @@ const WORK_TYPES = [
   'Site Clearing',
   'Land Leveling',
   'Excavation Work',
+  'Road Preparation',
   'Other'
 ];
 
@@ -36,75 +37,53 @@ const Booking = () => {
     setSubmitting(true);
     
     try {
-      // Combine date and time
       const bookingDate = new Date(`${formData.date}T${formData.time || '00:00'}`);
-      
-      const payload = {
-        ...formData,
-        date: bookingDate
-      };
-
+      const payload = { ...formData, date: bookingDate };
       const res = await axios.post(`${API_URL}/api/bookings`, payload);
       
       if (res.data.success) {
         setSuccess(true);
-        toast.success('Booking submitted successfully!');
+        toast.success('Inquiry Logged Successfully');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Something went wrong. Please try again.');
+      toast.error(err.response?.data?.message || 'Network error. Try again.');
     } finally {
       setSubmitting(false);
     }
   };
 
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 40 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { staggerChildren: 0.15 } }
-  };
-
   if (success) {
     return (
-      <div className="min-h-screen bg-matte-black pt-32 pb-20 px-4 flex items-center justify-center relative overflow-hidden">
-        {/* Background Stripes */}
-        <div className="absolute inset-0 opacity-5 pointer-events-none" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #000 0, #000 2px, transparent 0, transparent 20px)' }}></div>
+      <div className="min-h-screen bg-premium-black pt-32 pb-20 px-6 flex items-center justify-center relative overflow-hidden">
+        <div className="industrial-grid absolute inset-0 opacity-10 pointer-events-none" />
         
         <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="max-w-2xl w-full bg-dark-surface border border-dark-border shadow-2xl rounded-xl p-10 lg:p-16 text-center relative z-10"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="max-w-3xl w-full glass-morphism border border-white/10 p-16 md:p-24 text-center relative z-10"
         >
           <motion.div 
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.2 }}
-            className="w-24 h-24 bg-jcb-yellow rounded-full flex items-center justify-center mx-auto mb-10 shadow-[0_0_30px_rgba(242,194,0,0.3)]"
+            className="w-24 h-24 bg-industrial-yellow rounded-full flex items-center justify-center mx-auto mb-12 shadow-[0_0_50px_rgba(244,180,0,0.3)]"
           >
-            <CheckCircle size={48} className="text-matte-black" />
+            <CheckCircle size={56} className="text-black" />
           </motion.div>
-          <h1 className="text-4xl lg:text-5xl font-black font-montserrat text-white mb-6 uppercase tracking-tight">Booking Received!</h1>
-          <p className="text-gray-text text-lg mb-12 font-inter leading-relaxed">
-            Thank you, <span className="text-white font-bold">{formData.name}</span>.<br/> 
-            We have received your request for <span className="text-jcb-yellow font-bold">{formData.workType}</span>.<br/>
-            Our team will contact you shortly on <span className="text-white font-bold">{formData.phone}</span>.
+          <h1 className="text-6xl md:text-8xl font-bebas tracking-tighter mb-8 leading-none">
+            MISSION <span className="text-industrial-yellow">RECEIVED</span>
+          </h1>
+          <p className="font-inter text-gray-muted text-xl mb-16 leading-relaxed">
+            Deployment coordinates for <span className="text-white font-bold">{formData.workType}</span> logged. <br/>
+            Our logistics team will contact <span className="text-white font-bold">{formData.name}</span> shortly.
           </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <button 
-              onClick={() => setSuccess(false)}
-              className="btn-outline-premium"
-            >
-              NEW BOOKING
+          <div className="flex flex-col sm:flex-row gap-8 justify-center">
+            <button onClick={() => setSuccess(false)} className="btn-outline-cinematic !text-white !border-white/20">
+              LOG NEW MISSION
             </button>
-            <a 
-              href="/" 
-              className="btn-premium"
-            >
-              BACK TO HOME <ArrowRight size={20} />
+            <a href="/" className="btn-cinematic">
+              RETURN TO BASE
             </a>
           </div>
         </motion.div>
@@ -113,220 +92,170 @@ const Booking = () => {
   }
 
   return (
-    <div className="min-h-screen bg-matte-black pt-20">
+    <div className="bg-premium-black min-h-screen pt-32 pb-24">
       {/* Header */}
-      <section className="py-24 bg-dark-bg relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
-        <div className="absolute left-0 bottom-0 w-full h-px bg-gradient-to-r from-transparent via-jcb-yellow/50 to-transparent"></div>
-        
-        <motion.div 
-          className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
-          initial="hidden"
-          animate="show"
-          variants={staggerContainer}
-        >
-          <motion.div variants={fadeInUp} className="flex items-center justify-center gap-4 mb-4">
-            <div className="h-px w-12 bg-jcb-yellow"></div>
-            <p className="text-jcb-yellow text-sm font-montserrat font-bold uppercase tracking-[0.3em]">Scheduling</p>
-            <div className="h-px w-12 bg-jcb-yellow"></div>
+      <section className="relative py-24 overflow-hidden mb-12">
+        <div className="industrial-grid absolute inset-0 opacity-10 pointer-events-none" />
+        <div className="container mx-auto px-6 relative z-10">
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl">
+            <h1 className="text-7xl md:text-9xl font-bebas leading-[0.85] tracking-tighter mb-8">
+              SERVICE <span className="text-industrial-yellow">DEPLOYMENT</span>
+            </h1>
+            <p className="font-inter text-xl text-gray-muted max-w-2xl leading-relaxed">
+              Log your project requirements. Our fleet is ready for immediate mobilization across the Tamil Nadu sector.
+            </p>
           </motion.div>
-          <motion.h1 variants={fadeInUp} className="text-5xl lg:text-7xl font-black font-montserrat text-white mb-6 uppercase tracking-tight">
-            Book a <span className="text-transparent bg-clip-text bg-gradient-to-r from-jcb-yellow to-[#a68500]">Service</span>
-          </motion.h1>
-          <motion.p variants={fadeInUp} className="text-gray-text text-lg leading-relaxed font-inter max-w-2xl mx-auto">
-            Tell us about your project and we'll schedule a JCB for you. 
-            Fast response guaranteed within 24 hours.
-          </motion.p>
-        </motion.div>
+        </div>
       </section>
 
-      {/* Booking Form */}
-      <section className="py-24 bg-matte-black relative z-10">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            
-            {/* Info Column */}
-            <motion.div 
-              className="lg:col-span-1 space-y-8"
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <div className="card-premium p-10 rounded-xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-dark-bg rounded-bl-full border-b border-l border-dark-border -mr-10 -mt-10"></div>
-                <h3 className="text-xl font-black font-montserrat text-white mb-8 uppercase tracking-wide relative z-10">Why Book Online?</h3>
-                <ul className="space-y-6 relative z-10">
-                  {[
-                    'Priority scheduling for online bookings',
-                    'Transparent pricing & no hidden costs',
-                    'Direct communication with site team',
-                    'Instant confirmation on WhatsApp'
-                  ].map((text, i) => (
-                    <li key={i} className="flex items-start gap-4 text-gray-text font-inter">
-                      <div className="w-6 h-6 rounded bg-dark-bg border border-dark-border flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <CheckCircle size={14} className="text-jcb-yellow" />
-                      </div>
-                      {text}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+      {/* Main Content */}
+      <section className="container mx-auto px-6 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
+          
+          {/* Info Side */}
+          <div className="lg:col-span-4 space-y-12">
+            <div className="bg-charcoal p-12 border border-white/5 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-industrial-yellow/5 group-hover:bg-industrial-yellow/10 transition-colors -mr-8 -mt-8 rotate-45" />
+              <h3 className="text-3xl font-bebas tracking-widest text-white mb-8 border-b border-white/5 pb-4">LOGISTICS PROTOCOL</h3>
+              <ul className="space-y-8">
+                {[
+                  { icon: <Info size={18} />, text: 'Real-time site feasibility assessment' },
+                  { icon: <Clock size={18} />, text: '24-hour deployment response' },
+                  { icon: <Shield size={18} />, text: 'Tier-1 machinery guarantee' },
+                  { icon: <MessageSquare size={18} />, text: 'Direct operator communication' }
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-4 font-bebas text-lg tracking-wider text-gray-muted">
+                    <span className="text-industrial-yellow mt-1">{item.icon}</span>
+                    {item.text}
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-              <div className="bg-jcb-yellow p-10 rounded-xl text-matte-black relative overflow-hidden shadow-[0_0_30px_rgba(242,194,0,0.15)] group">
-                <div className="absolute -right-10 -bottom-10 opacity-10 transform group-hover:scale-110 transition-transform duration-500">
-                  <Phone size={150} />
-                </div>
-                <h3 className="text-xl font-black font-montserrat mb-4 uppercase tracking-wide relative z-10">Emergency Help?</h3>
-                <p className="font-inter font-medium mb-8 relative z-10 opacity-80">Need a machine urgently? Call us directly for immediate availability.</p>
-                <a 
-                  href="tel:+919443239842" 
-                  className="flex items-center gap-3 font-black font-montserrat text-2xl hover:translate-x-2 transition-transform relative z-10"
-                >
-                  <Phone size={24} /> +91 94432 39842
-                </a>
+            <div className="bg-industrial-yellow p-12 text-black group relative overflow-hidden">
+              <div className="absolute -right-8 -bottom-8 opacity-10 group-hover:scale-110 transition-transform">
+                <Phone size={160} />
               </div>
-            </motion.div>
+              <h3 className="text-3xl font-bebas tracking-widest mb-6">IMMEDIATE SUPPORT?</h3>
+              <p className="font-inter text-sm font-bold uppercase tracking-widest mb-8 opacity-80">Crisis management & urgent site clearing.</p>
+              <a href="tel:+919994289069" className="text-4xl font-bebas tracking-tighter hover:tracking-widest transition-all">
+                +91 99942 89069
+              </a>
+            </div>
+          </div>
 
-            {/* Form Column */}
-            <motion.div 
-              className="lg:col-span-2"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              <form onSubmit={handleSubmit} className="card-premium p-8 lg:p-12 rounded-xl space-y-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {/* Name */}
-                  <div className="space-y-3">
-                    <label className="text-xs font-montserrat font-bold uppercase tracking-wider text-gray-text flex items-center gap-2">
-                      <User size={14} className="text-jcb-yellow" /> FULL NAME
-                    </label>
+          {/* Form Side */}
+          <div className="lg:col-span-8">
+            <form onSubmit={handleSubmit} className="bg-charcoal p-10 md:p-16 border border-white/5 space-y-12 relative">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                {/* Name */}
+                <div className="space-y-4">
+                  <label className="text-[10px] font-black uppercase tracking-[0.5em] text-white/40 block">CLIENT IDENTITY</label>
+                  <div className="relative">
+                    <User className="absolute left-6 top-1/2 -translate-y-1/2 text-industrial-yellow/40" size={18} />
                     <input
                       required
                       type="text"
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      placeholder="Enter your name"
-                      className="w-full bg-dark-bg border border-dark-border rounded px-6 py-4 text-white font-inter focus:outline-none focus:border-jcb-yellow transition-colors placeholder:text-gray-text/50"
+                      placeholder="Full Name / Entity"
+                      className="w-full bg-premium-black border border-white/5 px-16 py-5 text-white font-bebas text-xl tracking-widest focus:border-industrial-yellow transition-colors outline-none placeholder:text-white/10"
                     />
                   </div>
+                </div>
 
-                  {/* Phone */}
-                  <div className="space-y-3">
-                    <label className="text-xs font-montserrat font-bold uppercase tracking-wider text-gray-text flex items-center gap-2">
-                      <Phone size={14} className="text-jcb-yellow" /> PHONE NUMBER
-                    </label>
+                {/* Phone */}
+                <div className="space-y-4">
+                  <label className="text-[10px] font-black uppercase tracking-[0.5em] text-white/40 block">COMMS CHANNEL</label>
+                  <div className="relative">
+                    <Phone className="absolute left-6 top-1/2 -translate-y-1/2 text-industrial-yellow/40" size={18} />
                     <input
                       required
                       type="tel"
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      placeholder="Enter mobile number"
-                      className="w-full bg-dark-bg border border-dark-border rounded px-6 py-4 text-white font-inter focus:outline-none focus:border-jcb-yellow transition-colors placeholder:text-gray-text/50"
+                      placeholder="Primary Phone"
+                      className="w-full bg-premium-black border border-white/5 px-16 py-5 text-white font-bebas text-xl tracking-widest focus:border-industrial-yellow transition-colors outline-none placeholder:text-white/10"
                     />
                   </div>
+                </div>
 
-                  {/* Location */}
-                  <div className="space-y-3">
-                    <label className="text-xs font-montserrat font-bold uppercase tracking-wider text-gray-text flex items-center gap-2">
-                      <MapPin size={14} className="text-jcb-yellow" /> SITE LOCATION
-                    </label>
+                {/* Location */}
+                <div className="space-y-4 md:col-span-2">
+                  <label className="text-[10px] font-black uppercase tracking-[0.5em] text-white/40 block">SITE COORDINATES</label>
+                  <div className="relative">
+                    <MapPin className="absolute left-6 top-1/2 -translate-y-1/2 text-industrial-yellow/40" size={18} />
                     <input
                       required
                       type="text"
                       name="location"
                       value={formData.location}
                       onChange={handleChange}
-                      placeholder="Area/City in Sivagangai"
-                      className="w-full bg-dark-bg border border-dark-border rounded px-6 py-4 text-white font-inter focus:outline-none focus:border-jcb-yellow transition-colors placeholder:text-gray-text/50"
-                    />
-                  </div>
-
-                  {/* Work Type */}
-                  <div className="space-y-3">
-                    <label className="text-xs font-montserrat font-bold uppercase tracking-wider text-gray-text flex items-center gap-2">
-                      <ArrowRight size={14} className="text-jcb-yellow" /> WORK TYPE
-                    </label>
-                    <div className="relative">
-                      <select
-                        required
-                        name="workType"
-                        value={formData.workType}
-                        onChange={handleChange}
-                        className="w-full bg-dark-bg border border-dark-border rounded px-6 py-4 text-white font-inter focus:outline-none focus:border-jcb-yellow transition-colors appearance-none"
-                      >
-                        <option value="" disabled>Select work type</option>
-                        {WORK_TYPES.map(type => (
-                          <option key={type} value={type}>{type}</option>
-                        ))}
-                      </select>
-                      <div className="absolute inset-y-0 right-6 flex items-center pointer-events-none">
-                        <ArrowRight size={16} className="text-jcb-yellow transform rotate-90" />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Date */}
-                  <div className="space-y-3">
-                    <label className="text-xs font-montserrat font-bold uppercase tracking-wider text-gray-text flex items-center gap-2">
-                      <Calendar size={14} className="text-jcb-yellow" /> REQUIRED DATE
-                    </label>
-                    <input
-                      required
-                      type="date"
-                      name="date"
-                      value={formData.date}
-                      onChange={handleChange}
-                      className="w-full bg-dark-bg border border-dark-border rounded px-6 py-4 text-white font-inter focus:outline-none focus:border-jcb-yellow transition-colors css-date-icon"
-                      style={{ colorScheme: 'dark' }}
-                    />
-                  </div>
-
-                  {/* Time */}
-                  <div className="space-y-3">
-                    <label className="text-xs font-montserrat font-bold uppercase tracking-wider text-gray-text flex items-center gap-2">
-                      <Clock size={14} className="text-jcb-yellow" /> PREFERRED TIME
-                    </label>
-                    <input
-                      required
-                      type="time"
-                      name="time"
-                      value={formData.time}
-                      onChange={handleChange}
-                      className="w-full bg-dark-bg border border-dark-border rounded px-6 py-4 text-white font-inter focus:outline-none focus:border-jcb-yellow transition-colors css-time-icon"
-                      style={{ colorScheme: 'dark' }}
+                      placeholder="Sector / Area / District"
+                      className="w-full bg-premium-black border border-white/5 px-16 py-5 text-white font-bebas text-xl tracking-widest focus:border-industrial-yellow transition-colors outline-none placeholder:text-white/10"
                     />
                   </div>
                 </div>
 
-                {/* Message */}
-                <div className="space-y-3">
-                  <label className="text-xs font-montserrat font-bold uppercase tracking-wider text-gray-text">ADDITIONAL MESSAGE (OPTIONAL)</label>
-                  <textarea
-                    name="message"
-                    value={formData.message}
+                {/* Work Type */}
+                <div className="space-y-4">
+                  <label className="text-[10px] font-black uppercase tracking-[0.5em] text-white/40 block">MISSION TYPE</label>
+                  <select
+                    required
+                    name="workType"
+                    value={formData.workType}
                     onChange={handleChange}
-                    rows="4"
-                    placeholder="Provide more details about the work..."
-                    className="w-full bg-dark-bg border border-dark-border rounded px-6 py-4 text-white font-inter focus:outline-none focus:border-jcb-yellow transition-colors resize-none placeholder:text-gray-text/50"
-                  ></textarea>
+                    className="w-full bg-premium-black border border-white/5 px-8 py-5 text-white font-bebas text-xl tracking-widest focus:border-industrial-yellow transition-colors outline-none appearance-none"
+                  >
+                    <option value="" disabled className="bg-charcoal">Select Protocol</option>
+                    {WORK_TYPES.map(type => (
+                      <option key={type} value={type} className="bg-charcoal">{type.toUpperCase()}</option>
+                    ))}
+                  </select>
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="btn-premium w-full disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {submitting ? (
-                    <><Loader2 size={20} className="animate-spin" /> SUBMITTING...</>
-                  ) : (
-                    'CONFIRM BOOKING REQUEST'
-                  )}
-                </button>
-              </form>
-            </motion.div>
+                {/* Date */}
+                <div className="space-y-4">
+                  <label className="text-[10px] font-black uppercase tracking-[0.5em] text-white/40 block">DEPLOYMENT DATE</label>
+                  <input
+                    required
+                    type="date"
+                    name="date"
+                    value={formData.date}
+                    onChange={handleChange}
+                    className="w-full bg-premium-black border border-white/5 px-8 py-5 text-white font-bebas text-xl tracking-widest focus:border-industrial-yellow transition-colors outline-none"
+                    style={{ colorScheme: 'dark' }}
+                  />
+                </div>
+              </div>
+
+              {/* Message */}
+              <div className="space-y-4">
+                <label className="text-[10px] font-black uppercase tracking-[0.5em] text-white/40 block">ADDITIONAL INTEL</label>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows="5"
+                  placeholder="Terrain specifics, equipment requirements, etc."
+                  className="w-full bg-premium-black border border-white/5 px-8 py-5 text-white font-inter text-sm focus:border-industrial-yellow transition-colors outline-none resize-none placeholder:text-white/10"
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                disabled={submitting}
+                className="btn-cinematic !w-full justify-center !py-6 !text-2xl disabled:opacity-50"
+              >
+                {submitting ? (
+                  <><Loader2 size={24} className="animate-spin" /> INITIALIZING...</>
+                ) : (
+                  'CONFIRM DEPLOYMENT REQUEST'
+                )}
+              </button>
+            </form>
           </div>
         </div>
       </section>
