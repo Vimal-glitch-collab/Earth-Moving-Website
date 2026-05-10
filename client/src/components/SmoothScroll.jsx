@@ -6,23 +6,21 @@ const SmoothScroll = () => {
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      gestureDirection: 'vertical',
-      smooth: true,
-      mouseMultiplier: 1,
       smoothTouch: false,
       touchMultiplier: 2,
       infinite: false,
     });
 
+    let animFrame;
     function raf(time) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      animFrame = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    animFrame = requestAnimationFrame(raf);
 
     return () => {
+      cancelAnimationFrame(animFrame);
       lenis.destroy();
     };
   }, []);

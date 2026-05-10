@@ -76,7 +76,7 @@ const Home = () => {
         >
           <img
             src="https://images.unsplash.com/photo-1541888946425-d81bb19480c5?auto=format&fit=crop&w=1920&q=80"
-            alt="Heavy Machinery Cinematic"
+            alt="Real JCB Excavation Site"
             className="w-full h-full object-cover filter brightness-[0.4] contrast-125"
           />
           <div className="absolute inset-0 cinematic-overlay" />
@@ -133,7 +133,7 @@ const Home = () => {
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-6xl md:text-[8rem] lg:text-[9.5rem] font-bebas leading-[0.85] tracking-tighter mb-8"
+              className="text-[12vw] md:text-[clamp(5rem,10vw,11rem)] font-bebas leading-[0.85] tracking-tighter mb-8"
             >
               MOVING <span className="text-industrial-yellow text-glow">EARTH.</span><br />
               BUILDING <span className="text-white">TRUST.</span>
@@ -201,7 +201,6 @@ const Home = () => {
                 <span className="text-industrial-yellow">INDUSTRIAL LANDSCAPE</span>
               </h3>
               <p className="font-inter text-gray-muted text-lg mb-10 leading-relaxed max-w-xl">
-              <p className="font-inter text-gray-muted text-lg mb-10 leading-relaxed max-w-xl">
                 Sri Balaji Earth Movers isn't just an equipment rental service; it's a legacy of precision and power. For over two decades, we have been the backbone of Sivaganga's infrastructure, providing unmatched heavy machinery solutions for government and private projects.
               </p>
               
@@ -229,9 +228,9 @@ const Home = () => {
               transition={{ duration: 1 }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1579412690850-bd41cd0af397?auto=format&fit=crop&w=1200&q=80" 
+                src="https://images.unsplash.com/photo-1581094271901-8022df4466f9?auto=format&fit=crop&w=1200&q=80" 
                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-                alt="About Industrial"
+                alt="About Industrial Operations"
               />
               <div className="absolute inset-0 bg-industrial-yellow/10 group-hover:bg-transparent transition-colors duration-500" />
             </motion.div>
@@ -303,13 +302,13 @@ const Home = () => {
               { 
                 name: 'JCB 3DX Xtra', 
                 type: 'Backhoe Loader', 
-                img: 'https://images.unsplash.com/photo-1590496793929-36417d3117de?auto=format&fit=crop&w=1200&q=80',
+                img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80',
                 specs: ['Heavy-duty Digging', 'Advanced Hydraulics']
               },
               { 
                 name: 'JCB 3DX Super', 
                 type: 'Industrial Earthmover', 
-                img: 'https://images.unsplash.com/photo-1541888946425-d81bb19480c5?auto=format&fit=crop&w=1200&q=80',
+                img: 'https://images.unsplash.com/photo-1579412690850-bd41cd0af397?auto=format&fit=crop&w=1200&q=80',
                 specs: ['Precision Grading', 'High Efficiency']
               }
             ].map((machine, idx) => (

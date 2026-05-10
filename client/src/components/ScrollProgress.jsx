@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 
 const ScrollProgress = () => {
@@ -10,10 +10,26 @@ const ScrollProgress = () => {
   });
 
   return (
-    <motion.div
-      className="scroll-progress"
-      style={{ scaleX, transformOrigin: "0%" }}
-    />
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '3px',
+        background: 'rgba(255, 255, 255, 0.05)',
+        zIndex: 10000,
+      }}
+    >
+      <motion.div
+        style={{
+          height: '100%',
+          background: '#F4B400',
+          scaleX,
+          transformOrigin: '0%',
+        }}
+      />
+    </div>
   );
 };
 

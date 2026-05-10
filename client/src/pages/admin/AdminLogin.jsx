@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { toast } from 'react-hot-toast';
-import { Lock, Mail, ArrowRight, Loader2 } from 'lucide-react';
+import { Lock, Mail, ArrowRight, Loader2, Hexagon } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const AdminLogin = () => {
@@ -17,7 +17,7 @@ const AdminLogin = () => {
     setSubmitting(true);
     try {
       await login(email, password);
-      toast.success('Logged in successfully');
+      toast.success('Access Granted');
       navigate('/admin/dashboard');
     } catch (err) {
       toast.error(err.response?.data?.message || 'Invalid credentials');
@@ -27,37 +27,43 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-matte-black flex items-center justify-center px-4 py-32 relative overflow-hidden">
-      {/* Background industrial stripes */}
-      <div className="absolute inset-0 opacity-5 pointer-events-none" style={{ backgroundImage: 'repeating-linear-gradient(45deg, #000 0, #000 2px, transparent 0, transparent 20px)' }}></div>
-      
-      <motion.div 
+    <div className="min-h-screen bg-premium-black flex items-center justify-center px-4 py-32 relative overflow-hidden">
+      {/* Background Grid */}
+      <div className="industrial-grid absolute inset-0 opacity-10 pointer-events-none" />
+      {/* Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-industrial-yellow/5 blur-[100px] pointer-events-none" />
+
+      <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         className="max-w-md w-full relative z-10"
       >
         {/* Logo */}
-        <div className="flex items-center justify-center gap-4 mb-10">
-          <div className="w-14 h-14 bg-jcb-yellow rounded flex items-center justify-center font-montserrat font-black text-black-matte text-2xl shadow-[0_0_20px_rgba(242,194,0,0.3)]">
-            SB
+        <div className="flex items-center justify-center gap-4 mb-12">
+          <div className="relative">
+            <Hexagon className="w-16 h-16 text-industrial-yellow fill-industrial-yellow/10" />
+            <span className="absolute inset-0 flex items-center justify-center font-bebas text-2xl text-white font-bold">
+              SB
+            </span>
           </div>
-          <div className="text-left">
-            <div className="text-white font-montserrat font-black text-xl tracking-tighter uppercase leading-none">SRI BALAJI</div>
-            <div className="text-jcb-yellow font-montserrat text-xs font-bold tracking-[0.25em] uppercase leading-none mt-1.5">EARTH MOVERS</div>
+          <div className="flex flex-col">
+            <span className="font-bebas text-3xl tracking-widest text-white leading-none">SRI BALAJI</span>
+            <span className="font-inter text-[10px] font-black tracking-[0.5em] text-industrial-yellow uppercase leading-none mt-1">EARTH MOVERS</span>
           </div>
         </div>
 
-        <div className="card-premium p-8 lg:p-10 rounded-xl shadow-2xl">
-          <div className="mb-8 text-center">
-            <h1 className="text-2xl font-black font-montserrat text-white mb-2 uppercase tracking-wide">Admin Portal</h1>
-            <p className="text-gray-text text-sm font-inter">Enter your credentials to manage bookings and gallery.</p>
+        {/* Card */}
+        <div className="glass-morphism border border-white/10 p-10 lg:p-12">
+          <div className="mb-10 text-center">
+            <h1 className="text-4xl font-bebas tracking-[0.2em] text-white mb-2">ADMIN PORTAL</h1>
+            <p className="text-gray-muted text-sm font-inter">Secure access for authorized personnel only.</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-8">
             <div className="space-y-3">
-              <label className="text-xs font-montserrat font-bold uppercase tracking-wider text-gray-text flex items-center gap-2">
-                <Mail size={14} className="text-jcb-yellow" /> EMAIL ADDRESS
+              <label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 flex items-center gap-2">
+                <Mail size={12} className="text-industrial-yellow" /> Email Address
               </label>
               <input
                 required
@@ -65,13 +71,13 @@ const AdminLogin = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@sribalaji.com"
-                className="w-full bg-dark-bg border border-dark-border rounded px-4 py-3 text-white font-inter focus:outline-none focus:border-jcb-yellow transition-colors placeholder:text-gray-text/50"
+                className="w-full bg-premium-black border border-white/10 px-5 py-4 text-white font-inter text-sm focus:outline-none focus:border-industrial-yellow transition-colors placeholder:text-white/20"
               />
             </div>
 
             <div className="space-y-3">
-              <label className="text-xs font-montserrat font-bold uppercase tracking-wider text-gray-text flex items-center gap-2">
-                <Lock size={14} className="text-jcb-yellow" /> PASSWORD
+              <label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 flex items-center gap-2">
+                <Lock size={12} className="text-industrial-yellow" /> Password
               </label>
               <input
                 required
@@ -79,26 +85,26 @@ const AdminLogin = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full bg-dark-bg border border-dark-border rounded px-4 py-3 text-white font-inter focus:outline-none focus:border-jcb-yellow transition-colors placeholder:text-gray-text/50"
+                className="w-full bg-premium-black border border-white/10 px-5 py-4 text-white font-inter text-sm focus:outline-none focus:border-industrial-yellow transition-colors placeholder:text-white/20"
               />
             </div>
 
             <button
               type="submit"
               disabled={submitting}
-              className="btn-premium w-full disabled:opacity-50 disabled:cursor-not-allowed mt-4"
+              className="btn-cinematic w-full justify-center !py-5 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {submitting ? (
-                <Loader2 size={20} className="animate-spin" />
+                <><Loader2 size={20} className="animate-spin" /> VERIFYING...</>
               ) : (
-                <>SIGN IN <ArrowRight size={18} /></>
+                <>AUTHORIZE ACCESS <ArrowRight size={18} /></>
               )}
             </button>
           </form>
 
-          <div className="mt-8 pt-8 border-t border-dark-border text-center">
-            <a href="/" className="text-gray-text hover:text-white text-xs font-montserrat font-bold uppercase tracking-wider transition-colors">
-              &larr; BACK TO PUBLIC WEBSITE
+          <div className="mt-10 pt-8 border-t border-white/5 text-center">
+            <a href="/" className="text-white/20 hover:text-white text-[10px] font-bold uppercase tracking-[0.3em] transition-colors">
+              ← Return to Public Site
             </a>
           </div>
         </div>
@@ -108,3 +114,4 @@ const AdminLogin = () => {
 };
 
 export default AdminLogin;
+

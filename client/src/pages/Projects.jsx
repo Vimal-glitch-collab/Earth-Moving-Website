@@ -8,9 +8,9 @@ const API_URL = import.meta.env.VITE_API_URL || '';
 const CATEGORIES = ['All', 'Excavation', 'Site Clearing', 'Land Leveling', 'Road Work', 'Other'];
 
 const PLACEHOLDER_IMAGES = [
-  { _id: 'p1', title: 'Industrial Foundation Excavation', category: 'Excavation', imageUrl: '/projects/project1.png' },
-  { _id: 'p2', title: 'Sivaganga Site Clearing', category: 'Site Clearing', imageUrl: 'https://images.unsplash.com/photo-1590496793929-36417d3117de?w=800&q=80' },
-  { _id: 'p3', title: 'Precision Land Leveling', category: 'Land Leveling', imageUrl: '/projects/project2.png' },
+  { _id: 'p1', title: 'Industrial Foundation Excavation', category: 'Excavation', imageUrl: 'https://images.unsplash.com/photo-1541888946425-d81bb19480c5?w=800&q=80' },
+  { _id: 'p2', title: 'Sivaganga Site Clearing', category: 'Site Clearing', imageUrl: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80' },
+  { _id: 'p3', title: 'Precision Land Leveling', category: 'Land Leveling', imageUrl: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&q=80' },
   { _id: 'p4', title: 'Industrial Road Construction', category: 'Road Work', imageUrl: 'https://images.unsplash.com/photo-1581094271901-8022df4466f9?w=800&q=80' },
   { _id: 'p5', title: 'Deep Excavation Mission', category: 'Excavation', imageUrl: 'https://images.unsplash.com/photo-1541888946425-d81bb19480c5?w=800&q=80' },
   { _id: 'p6', title: 'Sector Ground Leveling', category: 'Land Leveling', imageUrl: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=800&q=80' },
